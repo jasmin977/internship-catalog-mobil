@@ -4,6 +4,7 @@ import { theme } from "../config";
 import AppButton from "../components/atoms/AppButton";
 import Background from "../components/atoms/Background";
 import Header from "../components/atoms/Header";
+import SignUpInSwitch from "../components/atoms/signUpInSwitch";
 
 const StartScreen = ({ navigation }) => {
   return (
@@ -33,12 +34,13 @@ const StartScreen = ({ navigation }) => {
         title="login"
         onPress={() => navigation.replace("LoginScreen")}
       />
-      <View style={styles.row}>
-        <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("RegisterScreen")}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
-      </View>
+
+      <SignUpInSwitch
+        quest="Don’t have an account"
+        sol="Sign Up"
+        screen="RegisterScreen"
+        navigation={navigation}
+      />
     </Background>
   );
 };
@@ -57,19 +59,7 @@ const styles = StyleSheet.create({
     color: theme.colors.subtext,
     textAlign: "center",
     width: 300,
-  },
-
-  row: {
-    flexDirection: "row",
-    marginTop: 10,
-  },
-  forgot: {
-    fontSize: 13,
-    color: theme.colors.text,
-  },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
+    fontFamily: "MyFont-Regular",
   },
 });
 

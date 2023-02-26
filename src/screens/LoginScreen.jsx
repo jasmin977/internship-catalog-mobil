@@ -8,6 +8,7 @@ import AppButton from "../components/atoms/AppButton";
 import { theme } from "../config";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
+import SignUpInSwitch from "../components/atoms/signUpInSwitch";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
@@ -56,14 +57,13 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-
       <AppButton title="login" onPress={() => onLoginPressed()} />
-      <View style={styles.row}>
-        <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("RegisterScreen")}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
-      </View>
+      <SignUpInSwitch
+        quest="Don't have an account"
+        sol="Sign Up"
+        screen="RegisterScreen"
+        navigation={navigation}
+      />
     </Background>
   );
 };
@@ -75,16 +75,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginBottom: 24,
   },
-  row: {
-    flexDirection: "row",
-    marginTop: 10,
-  },
+
   forgot: {
     fontSize: 13,
     color: theme.colors.text,
-  },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
+    fontFamily: "MyFont-SemiBold",
   },
 });
