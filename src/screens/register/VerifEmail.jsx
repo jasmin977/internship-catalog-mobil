@@ -9,8 +9,7 @@ import StepsHeader from "../../components/molecules/StepsHeader";
 
 const VerifEmail = ({ route, navigation }) => {
   const [code, setCode] = useState(["", "", "", ""]);
-  //const { email } = route.params;
-  const email = "example@issatso-u.tn";
+  const { email } = route.params;
   const handleResendCode = async () => {
     const [{ data, status }, err] =
       await registrationApi.requestEmailVerification(email);
@@ -70,6 +69,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     display: "flex",
     color: theme.colors.subtext,
+
     textAlign: "center",
     width: 300,
   },

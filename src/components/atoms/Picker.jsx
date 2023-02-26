@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { theme } from "../../config";
 import { Specialities } from "../../data/Specialities";
+import { theme } from "../../config";
 
 const SpecialityPicker = () => {
   const [choosenValue, setChoosenValue] = useState(2);

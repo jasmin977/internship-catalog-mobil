@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 import Header from "../atoms/Header";
 
 const StepsHeader = ({ headerText, subtext, email }) => {
@@ -16,8 +16,7 @@ const StepsHeader = ({ headerText, subtext, email }) => {
       <Header title={headerText} />
 
       <Text style={styles.subtitle}>
-        {subtext} {" "}
-        {email}.
+        {subtext} {email}.
       </Text>
     </View>
   );
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   subtitle: {
-   
     fontSize: 17,
     lineHeight: 20,
     display: "flex",
