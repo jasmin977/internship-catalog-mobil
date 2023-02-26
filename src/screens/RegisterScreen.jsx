@@ -8,6 +8,7 @@ import AppButton from "../components/atoms/AppButton";
 import { theme } from "../config/theme";
 import { emailValidator } from "../helpers/emailValidator";
 import axios from "axios";
+import SignUpInSwitch from "../components/atoms/signUpInSwitch";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState({
@@ -54,16 +55,12 @@ const RegisterScreen = ({ navigation }) => {
         keyboardType="email-address"
       />
 
-      <Text style={{ paddingVertical: 30, color: theme.colors.subtext }}>
+      <Text style={{ paddingVertical: 30, color: theme.colors.subtext, fontFamily: "MyFont-Regular", }}>
         Please enter your Institute Email
       </Text>
       <AppButton title="Send" onPress={() => onLoginPressed()} />
-      <View style={styles.row}>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
-          <Text style={styles.link}>Login</Text>
-        </TouchableOpacity>
-      </View>
+      <SignUpInSwitch quest="Have an account already" sol="Sign In" screen="LoginScreen" navigation={navigation}/>
+
     </Background>
   );
 };
@@ -75,16 +72,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginBottom: 24,
   },
-  row: {
-    flexDirection: "row",
-    marginTop: 10,
-  },
   forgot: {
     fontSize: 13,
     color: theme.colors.text,
   },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
-  },
+ 
 });

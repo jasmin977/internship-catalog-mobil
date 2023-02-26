@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     fontSize: 16,
+    fontFamily: "MyFont-Regular",
     backgroundColor: theme.colors.input,
   },
   error: {

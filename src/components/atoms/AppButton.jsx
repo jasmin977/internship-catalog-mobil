@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
     fontWeight: "400",
+    fontFamily: "MyFont-SemiBold",
     alignSelf: "center",
     fontSize: 20,
     textTransform: "capitalize",

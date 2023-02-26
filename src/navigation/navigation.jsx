@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 export const MyStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="StartScreen"
+      initialRouteName="VerifEmailScreen"
       screenOptions={{
         headerShown: false,
       }}

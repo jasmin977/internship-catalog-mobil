@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
   header: {
     color: theme.colors.text,
     paddingVertical: 20,
-    fontWeight: "500",
     fontSize: 35,
     lineHeight: 41,
+    fontFamily: "MyFont-SemiBold",
   },
 });
 export default Header;
