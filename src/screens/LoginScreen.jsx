@@ -9,11 +9,16 @@ import { theme } from "../config";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import SignUpInSwitch from "../components/atoms/signUpInSwitch";
+import { authApi } from "../api";
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: "", error: "" });
+  const [email, setEmail] = useState({
+    value: "user@issatso.u-sousse.tn",
+    error: "",
+  });
   const [password, setPassword] = useState({ value: "", error: "" });
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
+    console.log(email.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
@@ -21,10 +26,17 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Dashboard" }],
-    });
+    const [{ data, status }, err] = await authApi.login(
+      email.value,
+      password.value
+    );
+    console.log(data);
+    if (err) return console.log(err);
+    if (data.success)
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Dashboard" }],
+      });
   };
   return (
     <Background>

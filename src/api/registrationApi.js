@@ -1,40 +1,6 @@
-import { api } from "../config";
+import apiRequestHandler from "./apiRequestHandler";
 
 const BASE_URL = "/user";
-
-const apiRequestHandler = async (options) => {
-  try {
-    const { data, status } = await api.request(options);
-    return [{ data, status }, null];
-  } catch (error) {
-    if (error.response) {
-      return [
-        {
-          status: error.response.status,
-          data: error.response.data,
-        },
-        null,
-      ];
-    } else {
-      return [{}, error];
-    }
-  }
-};
-
-// try {
-//   const { data } = await axios.post(
-//     "http://192.168.1.17:5000/api/v1/user/verify_email",
-//     {
-//       email,
-//       code: code.join(""),
-//     }
-//   );
-//   if (data.success) {
-//     navigation.replace("CreatePassScreen", { email });
-//   }
-// } catch (err) {
-//   console.log(err?.response?.data);
-// }
 
 export default {
   requestEmailVerification: async (email) => {

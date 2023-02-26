@@ -17,7 +17,7 @@ const RegisterScreen = ({ navigation }) => {
   });
 
   const onLoginPressed = async () => {
-    const error = emailValidator(email);
+    const error = emailValidator(email.value);
     if (error) return setEmail({ ...email, error });
     const [{ data, status }, err] =
       await registrationApi.requestEmailVerification(email.value);
