@@ -7,17 +7,37 @@ import MyInputText from "../components/atoms/MyInputText";
 import AppButton from "../components/atoms/AppButton";
 import { theme } from "../config/theme";
 import { emailValidator } from "../helpers/emailValidator";
+import axios from "axios";
+
 const RegisterScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: "", error: "" });
+  const [email, setEmail] = useState({
+    value: "user@issatso.u-sousse.tn",
+    error: "",
+  });
 
-  const onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
-    if (emailError) {
-      setEmail({ ...email, error: emailError });
-
-      return;
+  const onLoginPressed = async () => {
+    const error = emailValidator(email);
+    if (error) {
+      return setEmail({ ...email, error });
+    } else {
+      try {
+        const { data } = await axios.post(
+          "http://192.168.1.17:5000/api/v1/user/request_email_verification",
+          {
+            email: email.value,
+          }
+        );
+        if (data.success) {
+          navigation.replace("VerifEmailScreen", { email: email.value });
+        }
+      } catch (err) {
+        console.log(err);
+        setEmail({
+          ...email,
+          error: err?.response?.data.error,
+        });
+      }
     }
-    navigation.replace("VerifEmailScreen");
   };
   return (
     <Background>

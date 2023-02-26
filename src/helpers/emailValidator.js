@@ -1,6 +1,12 @@
 export function emailValidator(email) {
-  const re = /\S+@\S+\.\S+/
-  if (!email) return "Email can't be empty."
-  if (!re.test(email)) return 'Ooops! We need a valid institute email address.'
-  return ''
+  if (!email) return "Email can't be empty.";
+  else if (!verifyEmailFormat(email.value))
+    return "Ooops! We need a valid institute email address.";
+
+  return null;
+}
+
+export function verifyEmailFormat(email) {
+  const reg = new RegExp(/[a-z]+@issatso\.u-sousse\.tn/);
+  return reg.test(email);
 }

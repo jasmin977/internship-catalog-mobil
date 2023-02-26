@@ -2,8 +2,7 @@ import { View, TextInput, StyleSheet } from "react-native";
 import React, { useState, useRef } from "react";
 import { theme } from "../../config/theme";
 
-const CodeInput = () => {
-  const [code, setCode] = useState(["", "", "", ""]);
+const CodeInput = ({ code, setCode }) => {
   const inputRefs = useRef([]);
   const handleCodeChange = (text, index) => {
     if (/^\d{0,1}$/.test(text)) {
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-   gap:5,
+    gap: 5,
     padding: 10,
   },
   input: {
@@ -65,10 +64,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "600",
     textAlign: "center",
-    
+
     borderRadius: 5,
-  
-    backgroundColor:theme.colors.input,
+
+    backgroundColor: theme.colors.input,
   },
 });
 export default CodeInput;
