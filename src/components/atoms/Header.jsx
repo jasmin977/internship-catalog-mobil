@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 
 const Header = ({ title }) => {
   return <Text style={styles.header}>{title}</Text>;

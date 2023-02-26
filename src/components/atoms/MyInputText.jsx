@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, Text, StyleSheet, View } from "react-native";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 
 const MyInputText = (props) => {
   const handleInputChange = (value) => {

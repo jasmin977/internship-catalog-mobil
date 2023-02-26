@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 
 const Background = ({ children }) => {
   return (

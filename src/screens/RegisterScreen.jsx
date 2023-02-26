@@ -5,9 +5,9 @@ import Header from "../components/atoms/Header";
 import Logo from "../components/atoms/Logo";
 import MyInputText from "../components/atoms/MyInputText";
 import AppButton from "../components/atoms/AppButton";
-import { theme } from "../config/theme";
+import { theme } from "../config";
 import { emailValidator } from "../helpers/emailValidator";
-import axios from "axios";
+import { registrationApi } from "../api";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState({
@@ -17,28 +17,15 @@ const RegisterScreen = ({ navigation }) => {
 
   const onLoginPressed = async () => {
     const error = emailValidator(email);
-    if (error) {
-      return setEmail({ ...email, error });
-    } else {
-      try {
-        const { data } = await axios.post(
-          "http://192.168.1.17:5000/api/v1/user/request_email_verification",
-          {
-            email: email.value,
-          }
-        );
-        if (data.success) {
-          navigation.replace("VerifEmailScreen", { email: email.value });
-        }
-      } catch (err) {
-        console.log(err);
-        setEmail({
-          ...email,
-          error: err?.response?.data.error,
-        });
-      }
-    }
+    if (error) return setEmail({ ...email, error });
+    const [{ data, status }, err] =
+      await registrationApi.requestEmailVerification(email.value);
+    if (err) return setEmail({ ...email, error: "Oops, Something went wrong" });
+    if (data.success)
+      navigation.replace("VerifEmailScreen", { email: email.value });
+    else setEmail({ ...email, error: data.error });
   };
+
   return (
     <Background>
       <Logo />

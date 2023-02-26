@@ -1,6 +1,6 @@
 import { View, TextInput, StyleSheet } from "react-native";
 import React, { useState, useRef } from "react";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 
 const CodeInput = ({ code, setCode }) => {
   const inputRefs = useRef([]);

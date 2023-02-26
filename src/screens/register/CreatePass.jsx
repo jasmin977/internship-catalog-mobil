@@ -1,26 +1,34 @@
-import { View, Text,StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import MyInputText from "../../components/atoms/MyInputText";
 import { passwordValidator } from "../../helpers/passwordValidator";
 import Header from "../../components/atoms/Header";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 import AppButton from "../../components/atoms/AppButton";
+import { registrationApi } from "../../api";
 
-const CreatePass = ({ navigation }) => {
+const CreatePass = ({ route, navigation }) => {
   const [password, setPassword] = useState({ value: "", error: "" });
   const [cpassword, setCpassword] = useState({ value: "", error: "" });
 
-  const onContinuePressed = () => {
+  const onContinuePressed = async () => {
     const passwordError = passwordValidator(password.value);
     const cpasswordError = passwordValidator(password.value, cpassword.value);
     if (passwordError || cpasswordError) {
       setCpassword({ ...cpassword, error: cpasswordError });
       setPassword({ ...password, error: passwordError });
-     
       return;
     }
-    navigation.replace("CompleteProfileScreen");
+    const [{ data, status }, err] = await registrationApi.createAcount(
+      route.params.email,
+      password.value,
+      cpassword.value
+    );
+    if (data?.success)
+      navigation.replace("CompleteProfileScreen", {
+        email: route.params.email,
+      });
   };
   return (
     <Background>
@@ -49,7 +57,7 @@ const CreatePass = ({ navigation }) => {
           autoCapitalize="none"
           secureTextEntry
         />
-          <MyInputText
+        <MyInputText
           returnKeyType="done"
           email={cpassword.value}
           onChangeText={(text) => setCpassword({ value: text, error: "" })}
@@ -64,17 +72,15 @@ const CreatePass = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-    subtitle: {
-        fontWeight: "300",
-        fontSize: 17,
-        lineHeight: 20,
-        display: "flex",
-        color: theme.colors.subtext,
-        textAlign: "center",
-        width: 300,
-      },
-    
-  
-  });
-  
+  subtitle: {
+    fontWeight: "300",
+    fontSize: 17,
+    lineHeight: 20,
+    display: "flex",
+    color: theme.colors.subtext,
+    textAlign: "center",
+    width: 300,
+  },
+});
+
 export default CreatePass;

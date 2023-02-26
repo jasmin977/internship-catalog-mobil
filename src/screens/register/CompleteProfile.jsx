@@ -10,12 +10,13 @@ import {
 } from "../../helpers/nameValidator";
 import AppButton from "../../components/atoms/AppButton";
 import SpecialityPicker from "../../components/atoms/Picker";
+import { registrationApi } from "../../api";
 
-const CompleteProfile = ({ navigation }) => {
+const CompleteProfile = ({ route, navigation }) => {
   const [firstname, setFirstname] = useState({ value: "", error: "" });
   const [lastname, setLastname] = useState({ value: "", error: "" });
 
-  const onCreatePressed = () => {
+  const onCreatePressed = async () => {
     const firstnameError = firstnameValidator(firstname.value);
     const lastnameError = lastnameValidator(lastname.value);
     if (lastnameError || firstnameError) {
@@ -23,10 +24,18 @@ const CompleteProfile = ({ navigation }) => {
       setLastname({ ...lastname, error: lastnameError });
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Dashboard" }],
-    });
+    const [{ data, status }, err] = await registrationApi.userPersonalInfo(
+      route.params.email,
+      firstname.value,
+      lastname.value,
+      "test"
+    );
+    if (err) console.log(err);
+    if (data.success)
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Dashboard" }],
+      });
   };
 
   return (

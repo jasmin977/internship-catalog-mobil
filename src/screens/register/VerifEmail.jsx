@@ -2,47 +2,34 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import Header from "../../components/atoms/Header";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 import CodeInput from "../../components/molecules/codeInput";
 import AppButton from "../../components/atoms/AppButton";
-import axios from "axios";
+import { registrationApi } from "../../api";
 
 const VerifEmail = ({ route, navigation }) => {
   const [code, setCode] = useState(["", "", "", ""]);
   const { email } = route.params;
 
   const handleResendCode = async () => {
-    try {
-      const { data } = await axios.post(
-        "http://192.168.1.17:5000/api/v1/user/request_email_verification",
-        {
-          email,
-        }
-      );
-      if (data.success) {
-        setCode(["", "", "", ""]);
-        // navigation.replace("VerifEmailScreen", { email: email.value });
-      }
-    } catch (err) {
-      console.log(err.response?.data);
-    }
+    const [{ data, status }, err] =
+      await registrationApi.requestEmailVerification(email);
+    if (err) return console.log(err);
+    console.log(`status: ${status}`);
+    console.log(data);
+    setCode(["", "", "", ""]);
   };
 
   const hanldeVerifyEmail = async () => {
-    console.log(email, code.join(""));
-    try {
-      const { data } = await axios.post(
-        "http://192.168.1.17:5000/api/v1/user/verify_email",
-        {
-          email,
-          code: code.join(""),
-        }
-      );
-      if (data.success) {
-        navigation.replace("CreatePassScreen", { email });
-      }
-    } catch (err) {
-      console.log(err?.response?.data);
+    const [{ status, data }, err] = await registrationApi.verifyEmail(
+      email,
+      code.join("")
+    );
+    if (err) return console.log(err);
+    if (data.success) {
+      navigation.replace("CreatePassScreen", { email });
+    } else {
+      console.log(`status: ${status}, ${data.error}`);
     }
   };
 

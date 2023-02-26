@@ -5,9 +5,9 @@ import Header from "../components/atoms/Header";
 import Logo from "../components/atoms/Logo";
 import MyInputText from "../components/atoms/MyInputText";
 import AppButton from "../components/atoms/AppButton";
-import { theme } from "../config/theme";
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
+import { theme } from "../config";
+import { emailValidator } from "../helpers/emailValidator";
+import { passwordValidator } from "../helpers/passwordValidator";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });

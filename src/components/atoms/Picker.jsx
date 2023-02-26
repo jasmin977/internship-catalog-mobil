@@ -1,11 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { theme } from "../../config/theme";
+import { theme } from "../../config";
 import { Specialities } from "../../data/Specialities";
 
 const SpecialityPicker = () => {
-
   const [choosenValue, setChoosenValue] = useState(2);
   const [choosenIndex, setChoosenIndex] = useState(1);
   return (
@@ -19,11 +18,11 @@ const SpecialityPicker = () => {
         }}
       >
         {Specialities.map((item) => {
-          return <Picker.Item key={item.id} value={item.id} label={item.title} />;
+          return (
+            <Picker.Item key={item.id} value={item.id} label={item.title} />
+          );
         })}
       </Picker>
-
-     
     </View>
   );
 };
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: "center",
   },
- 
+
   picker: {
     marginVertical: 10,
     width: 320,

@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { theme } from "../config/theme";
+import { theme } from "../config";
 import AppButton from "../components/atoms/AppButton";
 import Background from "../components/atoms/Background";
 import Header from "../components/atoms/Header";
