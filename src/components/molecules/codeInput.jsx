@@ -1,8 +1,8 @@
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Text } from "react-native";
 import React, { useState, useRef } from "react";
 import { theme } from "../../config";
 
-const CodeInput = ({ code, setCode }) => {
+const CodeInput = ({ code, setCode, errorText, seterrorText }) => {
   const inputRefs = useRef([]);
   const handleCodeChange = (text, index) => {
     if (/^\d{0,1}$/.test(text)) {
@@ -10,6 +10,7 @@ const CodeInput = ({ code, setCode }) => {
       const newCode = [...code];
       newCode[index] = text;
       setCode(newCode);
+      seterrorText("");
 
       // Move focus to the next input field
       if (text.length === 1 && index < 3) {
@@ -24,7 +25,11 @@ const CodeInput = ({ code, setCode }) => {
     }
   };
   return (
-    <View>
+    <View
+      style={{
+        alignItems: "center",
+      }}
+    >
       <View style={styles.inputContainer}>
         {[0, 1, 2, 3].map((index) => (
           <TextInput
@@ -39,6 +44,7 @@ const CodeInput = ({ code, setCode }) => {
           />
         ))}
       </View>
+      {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
     </View>
   );
 };
@@ -68,6 +74,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
 
     backgroundColor: theme.colors.input,
+  },
+  error: {
+    color: "red",
+    marginTop: 5,
   },
 });
 export default CodeInput;

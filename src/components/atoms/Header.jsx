@@ -8,8 +8,8 @@ const Header = ({ title }) => {
 const styles = StyleSheet.create({
   header: {
     color: theme.colors.text,
-    paddingVertical: 20,
-    fontSize: 35,
+    paddingVertical: 10,
+    fontSize: 30,
     lineHeight: 41,
     fontFamily: "MyFont-SemiBold",
   },

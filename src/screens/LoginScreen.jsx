@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, { useState, useRef } from "react";
 import Background from "../components/atoms/Background";
 import Header from "../components/atoms/Header";
-import Logo from "../components/atoms/Logo";
 import MyInputText from "../components/atoms/MyInputText";
 import AppButton from "../components/atoms/AppButton";
 import { theme } from "../config";
@@ -34,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
     if (data.success)
       navigation.reset({
         index: 0,
-        routes: [{ name: "Dashboard" }],
+        routes: [{ name: "MainTabs" }],
       });
     else {
       data.error.includes("email")
@@ -44,10 +43,12 @@ const LoginScreen = ({ navigation }) => {
   };
   return (
     <Background>
-      <Logo />
+      <Image
+        source={require("../../assets/login.png")}
+        style={{ width: 300, height: 300 }}
+      />
       <Header title="welcome back" />
       <MyInputText
-        returnKeyType="next"
         email={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         errorText={email.error}
@@ -63,6 +64,7 @@ const LoginScreen = ({ navigation }) => {
         errorText={password.error}
         hint="**********"
         autoCapitalize="none"
+        type="psw"
         secureTextEntry
       />
 
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-end",
     marginBottom: 24,
+    paddingHorizontal: 20,
   },
 
   forgot: {

@@ -7,7 +7,7 @@ const StepsHeader = ({ headerText, subtext, email }) => {
   return (
     <View
       style={{
-        marginVertical: 25,
+        marginVertical: 15,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
