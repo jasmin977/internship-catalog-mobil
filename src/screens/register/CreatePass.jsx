@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import MyInputText from "../../components/atoms/MyInputText";
@@ -32,9 +32,13 @@ const CreatePass = ({ route, navigation }) => {
   };
   return (
     <Background>
+      <Image
+        source={require("../../icons/lock.png")}
+        style={{ width: 100, height: 100 }}
+      />
       <View
         style={{
-          marginVertical: 25,
+          marginVertical: 15,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -56,6 +60,7 @@ const CreatePass = ({ route, navigation }) => {
           hint="**********"
           autoCapitalize="none"
           secureTextEntry
+          type="psw"
         />
         <MyInputText
           returnKeyType="done"
@@ -65,6 +70,7 @@ const CreatePass = ({ route, navigation }) => {
           hint="**********"
           autoCapitalize="none"
           secureTextEntry
+          type="psw"
         />
       </View>
       <AppButton title="Continue" onPress={() => onContinuePressed()} />

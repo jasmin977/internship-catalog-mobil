@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import Header from "../../components/atoms/Header";
@@ -31,15 +31,22 @@ const CompleteProfile = ({ route, navigation }) => {
       "test"
     );
     if (err) console.log(err);
-    if (data.success)
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Dashboard" }],
-      });
+    if (data.success) console.log("====================================");
+    console.log(data);
+    console.log("====================================");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MainTabs" }],
+    });
   };
 
   return (
     <Background>
+      <Image
+        source={require("../../../assets/login.png")}
+        style={{ width: 300, height: 300 }}
+      />
+
       <Header title="Tell us about urself" />
 
       <View>

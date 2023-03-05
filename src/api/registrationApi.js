@@ -37,6 +37,14 @@ const apiRequestHandler = async (options) => {
 // }
 
 export default {
+  login: async (email, password) => {
+    return apiRequestHandler({
+      url: BASE_URL + "/login",
+      method: "post",
+      data: { email, password },
+    });
+  },
+
   requestEmailVerification: async (email) => {
     return apiRequestHandler({
       url: BASE_URL + "/request_email_verification",

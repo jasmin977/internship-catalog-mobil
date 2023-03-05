@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, { useState, useRef } from "react";
 import Background from "../components/atoms/Background";
 import Header from "../components/atoms/Header";
 import Logo from "../components/atoms/Logo";
@@ -9,11 +9,15 @@ import { theme } from "../config";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import SignUpInSwitch from "../components/atoms/signUpInSwitch";
+import { registrationApi } from "../api";
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: "", error: "" });
+  const [email, setEmail] = useState({
+    value: "user@issatso.u-sousse.tn",
+    error: "",
+  });
   const [password, setPassword] = useState({ value: "", error: "" });
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
@@ -21,17 +25,20 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
+
     navigation.reset({
       index: 0,
-      routes: [{ name: "Dashboard" }],
+      routes: [{ name: "MainTabs" }],
     });
   };
   return (
     <Background>
-      <Logo />
+      <Image
+        source={require("../../assets/login.png")}
+        style={{ width: 300, height: 300 }}
+      />
       <Header title="welcome back" />
       <MyInputText
-        returnKeyType="next"
         email={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         errorText={email.error}
@@ -47,6 +54,7 @@ const LoginScreen = ({ navigation }) => {
         errorText={password.error}
         hint="**********"
         autoCapitalize="none"
+        type="psw"
         secureTextEntry
       />
 

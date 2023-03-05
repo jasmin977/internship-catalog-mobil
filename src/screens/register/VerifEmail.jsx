@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import { theme } from "../../config";
@@ -9,6 +9,7 @@ import StepsHeader from "../../components/molecules/StepsHeader";
 
 const VerifEmail = ({ route, navigation }) => {
   const [code, setCode] = useState(["", "", "", ""]);
+  const [errorText, seterrorText] = useState("");
   const { email } = route.params;
   const handleResendCode = async () => {
     const [{ data, status }, err] =
@@ -29,11 +30,17 @@ const VerifEmail = ({ route, navigation }) => {
       navigation.replace("CreatePassScreen", { email });
     } else {
       console.log(`status: ${status}, ${data.error}`);
+      seterrorText(data.error);
+      console.log(errorText);
     }
   };
 
   return (
     <Background>
+      <Image
+        source={require("../../icons/email.png")}
+        style={{ width: 100, height: 100 }}
+      />
       <StepsHeader
         headerText="verify your email"
         subtext="To confirm your account ,enter the 4-digit code sent to"
@@ -42,7 +49,12 @@ const VerifEmail = ({ route, navigation }) => {
 
       {/** code inputs */}
       <View>
-        <CodeInput code={code} setCode={setCode} />
+        <CodeInput
+          code={code}
+          setCode={setCode}
+          errorText={errorText}
+          seterrorText={seterrorText}
+        />
       </View>
 
       <View style={styles.row}>

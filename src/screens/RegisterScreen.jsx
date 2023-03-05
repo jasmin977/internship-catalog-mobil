@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import Background from "../components/atoms/Background";
 import Header from "../components/atoms/Header";
@@ -29,14 +29,17 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <Background>
-      <Logo />
+      <Image
+        source={require("../../assets/register.png")}
+        style={{ width: 300, height: 300 }}
+      />
       <Header title="create your account" />
       <MyInputText
         returnKeyType="done"
         email={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         errorText={email.error}
-        hint="example@issatso-u.tn"
+        hint="example@issatso.u-sousse.tn"
         autoCapitalize="none"
         textContentType="emailAddress"
         keyboardType="email-address"
@@ -49,7 +52,7 @@ const RegisterScreen = ({ navigation }) => {
           fontFamily: "MyFont-Regular",
         }}
       >
-        Please enter your Institute Email
+        Please enter your Institution Email
       </Text>
       <AppButton title="Send" onPress={() => onLoginPressed()} />
       <SignUpInSwitch

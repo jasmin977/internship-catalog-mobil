@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView, StatusBar } from "react-native";
 import React from "react";
 import { theme } from "../../config";
 
@@ -12,15 +12,15 @@ const Background = ({ children }) => {
 
 const styles = StyleSheet.create({
   background: {
-    flex: 1,
-    width: "100%",
+    height: "100%",
+    padding: 15,
+
+    paddingTop: StatusBar.currentHeight,
     backgroundColor: theme.colors.bg,
   },
   container: {
-    flex: 1,
-    padding: 10,
     width: "100%",
-    maxWidth: 340,
+    padding: 15,
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
