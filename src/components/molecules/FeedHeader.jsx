@@ -7,9 +7,8 @@ const FeedHeader = () => {
   return (
     <View
       style={{
-        display: "flex",
-
-        marginTop: 10,
+        // display: "flex",
+        paddingHorizontal: 20,
         marginBottom: 30,
         width: "100%",
         flexDirection: "row",
@@ -30,6 +29,8 @@ const FeedHeader = () => {
             fontWeight: "500",
             fontSize: 20,
             lineHeight: 23,
+            fontFamily: "MyFont-SemiBold",
+
             color: theme.colors.text,
           }}
         >
@@ -38,6 +39,8 @@ const FeedHeader = () => {
         <Text
           style={{
             fontWeight: "400",
+            fontFamily: "MyFont-Regular",
+
             fontSize: 15,
             lineHeight: 15,
             color: theme.colors.subtext,

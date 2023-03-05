@@ -4,28 +4,27 @@ import { splitArray } from "../../../helpers/SplittedArray";
 import { theme } from "../../../config";
 
 const Domain = ({ specialties }) => {
-  const specialtiesTab = splitArray(specialties);
-
   return (
-    <View style={{ gap: 5 }}>
-      {specialtiesTab.map((domain, index) => {
-        return (
-          <View
-            key={index}
-            style={{ alignItems: "flex-start", justifyContent: "flex-start" }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: "MyFont-Regular",
-                color: theme.colors.text,
-              }}
-            >
-              {domain}
-            </Text>
-          </View>
-        );
-      })}
+    <View style={{ gap: 5, marginHorizontal: 20 }}>
+      {specialties ? (
+        splitArray(specialties, ",").map((domain, index) => {
+          return (
+            <View key={index} style={{}}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "MyFont-Regular",
+                  color: theme.colors.text,
+                }}
+              >
+                {domain}
+              </Text>
+            </View>
+          );
+        })
+      ) : (
+        <Text>No found</Text>
+      )}
     </View>
   );
 };

@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-end",
     marginBottom: 24,
+    paddingHorizontal: 20,
   },
 
   forgot: {

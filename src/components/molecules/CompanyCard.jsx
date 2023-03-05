@@ -3,6 +3,7 @@ import React from "react";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { theme } from "../../config";
 import { useNavigation } from "@react-navigation/native";
+import { splitArray } from "../../helpers/SplittedArray";
 const defaultCompanyImage =
   "https://icon-library.com/images/companies-icon/companies-icon-4.jpg";
 
@@ -185,23 +186,50 @@ const CompanyCard = ({ company, taille }) => {
           }}
         >
           {/**phone */}
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 2,
-              alignItems: "center",
-            }}
-          >
-            <Ionicons
-              color={theme.colors.subtext}
-              size={15}
-              name="call-outline"
-            />
-            <Text style={{ color: theme.colors.subtext }}>
-              {company.company_phone}
-            </Text>
-          </View>
+          {!company.company_phone ? null : splitArray(
+              company.company_phone,
+              "\n"
+            ).length > 1 ? (
+            splitArray(company.company_phone, "\n").map((phone) => {
+              return (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 2,
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons
+                    color={theme.colors.subtext}
+                    size={15}
+                    name="call-outline"
+                  />
+                  <Text style={{ color: theme.colors.subtext }}>{phone}</Text>
+                </View>
+              );
+            })
+          ) : (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 2,
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                color={theme.colors.subtext}
+                size={15}
+                name="call-outline"
+              />
+              <Text style={{ color: theme.colors.subtext }}>
+                {company.company_phone}
+              </Text>
+            </View>
+          )}
 
           {/**mail */}
           <View

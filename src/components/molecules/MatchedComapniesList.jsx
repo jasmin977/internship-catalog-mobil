@@ -14,7 +14,7 @@ const MatchedComapniesList = () => {
       <View
         style={{
           width: "100%",
-
+          paddingHorizontal: 20,
           justifyContent: "space-between",
           flexDirection: "row",
         }}
@@ -48,16 +48,15 @@ const MatchedComapniesList = () => {
         <View
           style={{
             flex: 1,
-
+            marginVertical: 10,
             flexDirection: "row",
             alignItems: "flex-start",
-            paddingVertical: 10,
-
-            gap: 15,
+            paddingHorizontal: 20,
+            gap: 5,
           }}
         >
           {companies.map((company, index) => {
-            return <CompanyCard taille={320} company={company} key={index} />;
+            return <CompanyCard taille={300} company={company} key={index} />;
           })}
         </View>
       </ScrollView>

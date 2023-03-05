@@ -20,7 +20,6 @@ const Dashboard = ({ navigation }) => {
 
       <DomainHorizantalList />
       <MatchedComapniesList />
-
       <AppButton
         title="logout"
         onPress={() =>

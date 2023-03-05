@@ -1,4 +1,4 @@
-import { View, Image, Dimensions, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Background from "../../components/atoms/Background";
 import { theme } from "../../config";
@@ -17,7 +17,8 @@ const StickyHeader = ({ name }) => {
         backgroundColor: theme.colors.bg,
         alignItems: "center",
         gap: 5,
-        paddingBottom: 10,
+        paddingHorizontal: 20,
+        paddingBottom: 20,
       }}
     >
       <GoBackBtn />
@@ -37,14 +38,13 @@ const EntrepriseDetail = ({ route }) => {
   const { company } = route.params;
   return (
     <Background>
-      <View style={{ marginBottom: 50 }}>
+      <View style={{ paddingBottom: 60 }}>
         <ScrollView stickyHeaderIndices={[0]}>
           <StickyHeader name={company.company_name} />
           <View
             style={{
               borderRadius: 10,
-              width: "100%",
-              // borderWidth: 0.5,
+              marginHorizontal: 20,
               backgroundColor: theme.colors.input,
               gap: 10,
               alignItems: "center",

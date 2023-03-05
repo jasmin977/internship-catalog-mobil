@@ -36,7 +36,7 @@ export default function DomainHorizantalList() {
       <View
         style={{
           width: "100%",
-
+          paddingHorizontal: 20,
           justifyContent: "space-between",
           flexDirection: "row",
         }}
@@ -45,6 +45,7 @@ export default function DomainHorizantalList() {
           style={{
             fontFamily: "MyFont-SemiBold",
             fontSize: 15,
+
             textTransform: "capitalize",
             color: theme.colors.text,
           }}
@@ -70,11 +71,11 @@ export default function DomainHorizantalList() {
         <View
           style={{
             flex: 1,
-            marginVertical: 5,
+            marginVertical: 10,
 
             flexDirection: "row",
             alignItems: "flex-start",
-            padding: 10,
+            paddingHorizontal: 20,
             gap: 10,
           }}
         >

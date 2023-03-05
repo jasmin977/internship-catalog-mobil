@@ -13,15 +13,16 @@ const Background = ({ children }) => {
 const styles = StyleSheet.create({
   background: {
     height: "100%",
-    padding: 15,
 
+    alignItems: "center",
+    justifyContent: "flex-start",
     paddingTop: StatusBar.currentHeight,
     backgroundColor: theme.colors.bg,
   },
   container: {
     width: "100%",
-    padding: 15,
-    alignSelf: "center",
+    paddingTop: StatusBar.currentHeight,
+    // alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
   },

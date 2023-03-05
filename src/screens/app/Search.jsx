@@ -36,6 +36,7 @@ const Search = () => {
           backgroundColor: theme.colors.bg,
           alignItems: "center",
           gap: 5,
+          paddingHorizontal: 20,
           paddingBottom: 10,
         }}
       >

@@ -108,8 +108,6 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     marginTop: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 

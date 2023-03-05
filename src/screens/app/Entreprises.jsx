@@ -1,4 +1,4 @@
-import { TextInput, View, Text } from "react-native";
+import { TextInput, View } from "react-native";
 import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import { theme } from "../../config";
@@ -14,16 +14,20 @@ const Entreprises = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (query) => {
+    setSearchQuery(query);
     const filtered = companies.filter((item) => {
-      let comapnySpecialitiesTab = splitArray(item.specialties);
       return (
-        item.company_name.toLowerCase().includes(query.toLowerCase()) ||
-        item.company_city.toLowerCase().includes(query.toLowerCase()) ||
-        comapnySpecialitiesTab.some((item) => item === query.toLowerCase())
+        (item.specialties &&
+          splitArray(item.specialties).some(
+            (item) => item === query.toLowerCase()
+          )) ||
+        (item.company_name &&
+          item.company_name.toLowerCase().includes(query.toLowerCase())) ||
+        (item.company_city &&
+          item.company_city.toLowerCase().includes(query.toLowerCase()))
       );
     });
     setfilteredCompanies(filtered);
-    setSearchQuery(query);
   };
 
   const StickyHeader = () => {
@@ -35,7 +39,8 @@ const Entreprises = () => {
           backgroundColor: theme.colors.bg,
           alignItems: "center",
           gap: 5,
-          paddingBottom: 10,
+          paddingHorizontal: 20,
+          paddingBottom: 20,
         }}
       >
         <TextInput
@@ -46,7 +51,7 @@ const Entreprises = () => {
             padding: 10,
           }}
           placeholder="Search..."
-          //  onChangeText={handleSearch}
+          onChangeText={handleSearch}
           value={searchQuery}
         />
       </View>
@@ -71,10 +76,17 @@ const Entreprises = () => {
 
       <ScrollView stickyHeaderIndices={[0]}>
         <StickyHeader />
-        <View style={{ flex: 1, gap: 10, marginBottom: 50 }}>
+        <View
+          style={{
+            flex: 1,
+            gap: 10,
+            alignItems: "center",
+            marginBottom: 50,
+          }}
+        >
           {filteredCompanies.map((company, index) => {
             if (index < 15)
-              return <CompanyCard taille={300} company={company} key={index} />;
+              return <CompanyCard taille={320} company={company} key={index} />;
           })}
         </View>
       </ScrollView>

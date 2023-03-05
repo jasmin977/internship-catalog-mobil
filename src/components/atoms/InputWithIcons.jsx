@@ -38,17 +38,18 @@ const InputWithIcons = ({ iconNameLeft, iconNameRight, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: theme.colors.input,
     borderRadius: 10,
     padding: 10,
-    marginHorizontal: 10,
+    paddingHorizontal: 20,
   },
   input: {
     fontSize: 12,
+    fontFamily: "MyFont-Regular",
     marginHorizontal: 5,
     color: theme.colors.subtext,
   },

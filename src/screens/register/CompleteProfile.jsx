@@ -31,9 +31,8 @@ const CompleteProfile = ({ route, navigation }) => {
       "test"
     );
     if (err) console.log(err);
-    if (data.success) console.log("====================================");
-    console.log(data);
-    console.log("====================================");
+    if (data.success) console.log(data);
+
     navigation.reset({
       index: 0,
       routes: [{ name: "MainTabs" }],

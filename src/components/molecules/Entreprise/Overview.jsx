@@ -4,7 +4,7 @@ import { theme } from "../../../config";
 
 const Overview = ({ overview }) => {
   return (
-    <View>
+    <View style={{ marginHorizontal: 20 }}>
       <Text
         style={{
           fontSize: 20,
