@@ -145,26 +145,31 @@ const CompanyCard = ({ company, taille }) => {
               gap: 5,
             }}
           >
-            {/**company.domain.map((skill, index) => {
-              return (
-                <Text
-                  key={index}
-                  style={{
-                    color: theme.colors.primary,
-                    borderRadius: 5,
-                    borderWidth: 1.5,
-                    borderColor: theme.colors.primary,
-                    padding: 2,
-                    fontSize: 12,
-                    fontFamily: "MyFont-SemiBold",
-                    letterSpacing: 1,
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  {skill}
-                </Text>
-              );
-            })*/}
+            {company.specialties
+              ? splitArray(company.specialties, ",")
+                  .slice(0, 2)
+                  .map((domain, idx) => {
+                    return (
+                      <View key={`specialty_${idx}`}>
+                        <Text
+                          style={{
+                            color: theme.colors.primary,
+                            borderRadius: 5,
+                            borderWidth: 1.5,
+                            borderColor: theme.colors.primary,
+                            padding: 2,
+                            fontSize: 12,
+                            fontFamily: "MyFont-SemiBold",
+                            letterSpacing: 1,
+                            paddingHorizontal: 5,
+                          }}
+                        >
+                          {domain}
+                        </Text>
+                      </View>
+                    );
+                  })
+              : null}
           </View>
         </View>
       </View>

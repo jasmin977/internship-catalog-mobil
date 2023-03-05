@@ -27,10 +27,7 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    const [{ data, status }, err] = await authApi.login(
-      email.value,
-      password.value
-    );
+    const [{ data }, err] = await authApi.login(email.value, password.value);
 
     console.log(data);
     if (err) return console.log(err);
@@ -46,7 +43,7 @@ const LoginScreen = ({ navigation }) => {
     <Background>
       <Image
         source={require("../../assets/login.png")}
-        style={{ width: 300, height: 300 }}
+        style={{ width: 250, height: 250 }}
       />
       <Header title="welcome back" />
       <MyInputText

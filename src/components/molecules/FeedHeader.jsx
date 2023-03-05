@@ -1,9 +1,14 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import ProfileIcon from "../atoms/ProfileIcon";
 import { theme } from "../../config";
+import { AuthContext } from "../../context";
 
 const FeedHeader = () => {
+  const { userInfo } = useContext(AuthContext);
+  console.log("====================================");
+  console.log(userInfo);
+  console.log("====================================");
   return (
     <View
       style={{
@@ -34,7 +39,7 @@ const FeedHeader = () => {
             color: theme.colors.text,
           }}
         >
-          Hello jasmin 👋
+          Hello {userInfo.first_name} 👋
         </Text>
         <Text
           style={{

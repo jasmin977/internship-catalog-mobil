@@ -7,6 +7,7 @@ import Header from "../../components/atoms/Header";
 import { theme } from "../../config";
 import AppButton from "../../components/atoms/AppButton";
 import { registrationApi } from "../../api";
+import GoBackBtn from "../../components/atoms/GoBackBtn";
 
 const CreatePass = ({ route, navigation }) => {
   const [password, setPassword] = useState({ value: "", error: "" });
@@ -32,6 +33,9 @@ const CreatePass = ({ route, navigation }) => {
   };
   return (
     <Background>
+      <View style={{ alignSelf: "flex-start", paddingHorizontal: 20 }}>
+        <GoBackBtn />
+      </View>
       <Image
         source={require("../../icons/lock.png")}
         style={{ width: 100, height: 100 }}

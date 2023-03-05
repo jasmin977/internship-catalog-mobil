@@ -6,6 +6,7 @@ import CodeInput from "../../components/molecules/codeInput";
 import AppButton from "../../components/atoms/AppButton";
 import { registrationApi } from "../../api";
 import StepsHeader from "../../components/molecules/StepsHeader";
+import GoBackBtn from "../../components/atoms/GoBackBtn";
 
 const VerifEmail = ({ route, navigation }) => {
   const [code, setCode] = useState(["", "", "", ""]);
@@ -37,6 +38,9 @@ const VerifEmail = ({ route, navigation }) => {
 
   return (
     <Background>
+      <View style={{ alignSelf: "flex-start", paddingHorizontal: 20 }}>
+        <GoBackBtn />
+      </View>
       <Image
         source={require("../../icons/email.png")}
         style={{ width: 100, height: 100 }}

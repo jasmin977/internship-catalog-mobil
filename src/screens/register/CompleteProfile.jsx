@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Background from "../../components/atoms/Background";
 import Header from "../../components/atoms/Header";
 import MyInputText from "../../components/atoms/MyInputText";
@@ -11,8 +11,11 @@ import {
 import AppButton from "../../components/atoms/AppButton";
 import SpecialityPicker from "../../components/atoms/Picker";
 import { registrationApi } from "../../api";
+import GoBackBtn from "../../components/atoms/GoBackBtn";
+import { AuthContext } from "../../context";
 
-const CompleteProfile = ({ route, navigation }) => {
+const CompleteProfile = ({ route }) => {
+  const { saveUserCredential } = useContext(AuthContext);
   const [firstname, setFirstname] = useState({ value: "", error: "" });
   const [lastname, setLastname] = useState({ value: "", error: "" });
 
@@ -24,23 +27,23 @@ const CompleteProfile = ({ route, navigation }) => {
       setLastname({ ...lastname, error: lastnameError });
       return;
     }
-    const [{ data, status }, err] = await registrationApi.userPersonalInfo(
+    const [{ data }, err] = await registrationApi.userPersonalInfo(
       route.params.email,
       firstname.value,
       lastname.value,
       "test"
     );
     if (err) console.log(err);
-    if (data.success) console.log(data);
-
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "MainTabs" }],
-    });
+    if (data.success) {
+      saveUserCredential("token", data.user);
+    }
   };
 
   return (
     <Background>
+      <View style={{ alignSelf: "flex-start", paddingHorizontal: 20 }}>
+        <GoBackBtn />
+      </View>
       <Image
         source={require("../../../assets/login.png")}
         style={{ width: 300, height: 300 }}

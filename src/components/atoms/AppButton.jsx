@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     borderRadius: 5,
     paddingVertical: 10,
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     marginVertical: 10,
     width: "90%",
-    bottom: 0,
+    alignItems: "center",
   },
   appButtonText: {
     fontSize: 18,

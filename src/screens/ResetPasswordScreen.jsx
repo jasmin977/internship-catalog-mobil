@@ -6,6 +6,7 @@ import AppButton from "../components/atoms/AppButton";
 import StepsHeader from "../components/molecules/StepsHeader";
 import MyInputText from "../components/atoms/MyInputText";
 import { Image } from "react-native";
+import GoBackBtn from "../components/atoms/GoBackBtn";
 
 const ResetPasswordScreen = (navigation) => {
   const [email, setEmail] = useState({
@@ -15,6 +16,10 @@ const ResetPasswordScreen = (navigation) => {
 
   return (
     <Background>
+      <View style={{ alignSelf: "flex-start", paddingHorizontal: 20 }}>
+        <GoBackBtn />
+      </View>
+
       <Image
         source={require("../../assets/forgotPassword.png")}
         style={{ width: 300, height: 300 }}
