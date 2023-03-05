@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useContext } from "react";
 import Background from "../components/atoms/Background";
 import Header from "../components/atoms/Header";
 import MyInputText from "../components/atoms/MyInputText";
@@ -9,7 +9,10 @@ import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import SignUpInSwitch from "../components/atoms/signUpInSwitch";
 import { authApi } from "../api";
+import { AuthContext } from "../context";
 const LoginScreen = ({ navigation }) => {
+  const { saveUserCredential } = useContext(AuthContext);
+
   const [email, setEmail] = useState({
     value: "user@issatso.u-sousse.tn",
     error: "",
@@ -28,14 +31,12 @@ const LoginScreen = ({ navigation }) => {
       email.value,
       password.value
     );
+
     console.log(data);
     if (err) return console.log(err);
-    if (data.success)
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "MainTabs" }],
-      });
-    else {
+    if (data.success) {
+      saveUserCredential(data.token, data.user);
+    } else {
       data.error.includes("email")
         ? setEmail({ ...email, error: data.error })
         : setPassword({ ...password, error: data.error });

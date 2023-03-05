@@ -84,10 +84,13 @@ const Entreprises = () => {
             marginBottom: 50,
           }}
         >
-          {filteredCompanies.map((company, index) => {
-            if (index < 15)
-              return <CompanyCard taille={320} company={company} key={index} />;
-          })}
+          {filteredCompanies.slice(0, 15).map((company, idx) => (
+            <CompanyCard
+              taille={320}
+              company={company}
+              key={`filtred_company_${idx}`}
+            />
+          ))}
         </View>
       </ScrollView>
     </Background>

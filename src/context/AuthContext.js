@@ -2,12 +2,11 @@ import React, { useState, useEffect, createContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = createContext({
-  login: () => {},
-  logout: () => {},
-  isAuthenticated: {},
   isLoading: {},
   userToken: {},
   userInfo: () => {},
+  saveUserCredential: () => {},
+  removeUserCredential: () => {},
 });
 
 export default AuthProvider = ({ children }) => {
@@ -24,15 +23,14 @@ export default AuthProvider = ({ children }) => {
   const isLoggedIn = async () => {
     try {
       setisloading(true);
-
-      let isAuthenticated = await AsyncStorage.getItem("isAuthenticated");
+      let isAuthenticated = await AsyncStorage.getItem("userToken");
 
       if (isAuthenticated) {
-        setIsAuthenticated(true);
-        let userInfo = await AsyncStorage.getItem("userInfo");
+        let userInfo = await AsyncStorage.getItem("user");
         let userToken = await AsyncStorage.getItem("userToken");
         setUserToken(userToken);
         setUserInfo(userInfo);
+        setIsAuthenticated(true);
       }
       setisloading(false);
     } catch (error) {
@@ -40,31 +38,24 @@ export default AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (data) => {
+  const saveUserCredential = async (token, user) => {
     try {
-      const [{ data, status }, err] = await registrationApi.login(
-        email.value,
-        password.value
-      );
-      if (err) console.log(err);
-      if (data.success) {
-        setUserInfo();
-        setUserToken();
-        setIsAuthenticated(true);
-        AsyncStorage.setItem("userInfo");
-        AsyncStorage.setItem("userToken");
-        AsyncStorage.setItem("isAuthenticated", true);
-      }
+      console.log(token, user);
+      setUserInfo(user);
+      setUserToken(token);
+      setIsAuthenticated(true);
+      AsyncStorage.setItem("user", user);
+      AsyncStorage.setItem("userToken", token);
     } catch (error) {
+      console.log("Error writing to local storage");
       console.log(error);
     }
   };
 
-  const logout = async () => {
+  const removeUserCredential = async () => {
     try {
-      await AsyncStorage.removeItem("userInfo");
+      await AsyncStorage.removeItem("user");
       await AsyncStorage.removeItem("userToken");
-      await AsyncStorage.removeItem("isAuthenticated");
       setUserInfo(null);
       setUserToken(null);
       setIsAuthenticated(false);
@@ -77,11 +68,11 @@ export default AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        login,
-        logout,
-        userToken,
-        userInfo,
         isLoading,
+        userInfo,
+        userToken,
+        removeUserCredential,
+        saveUserCredential,
       }}
     >
       {children}

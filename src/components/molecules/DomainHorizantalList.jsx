@@ -79,8 +79,8 @@ export default function DomainHorizantalList() {
             gap: 10,
           }}
         >
-          {domains.map((domain, index) => {
-            return <Domain domain={domain} key={index} />;
+          {domains.map((domain, idx) => {
+            return <Domain domain={domain} key={`domain_list_${idx}`} />;
           })}
         </View>
       </ScrollView>

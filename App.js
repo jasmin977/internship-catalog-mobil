@@ -26,9 +26,7 @@ export default function App() {
   }
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <MyStack />
-      </NavigationContainer>
+      <StartNavigator />
     </AuthProvider>
   );
 }

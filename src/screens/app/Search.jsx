@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Background from "../../components/atoms/Background";
 import { theme } from "../../config";
 
-import CompanyCard from "../../components/molecules/CompanyCard";
 import companies from "../../data/output_2023-03-05_020409.json";
 import { splitArray } from "../../helpers/SplittedArray";
 import { ScrollView } from "react-native";

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import Background from "../../components/atoms/Background";
 
 import InputWithIcons from "../../components/atoms/InputWithIcons";
@@ -7,8 +7,10 @@ import DomainHorizantalList from "../../components/molecules/DomainHorizantalLis
 import MatchedComapniesList from "../../components/molecules/MatchedComapniesList";
 import AppButton from "../../components/atoms/AppButton";
 import FeedHeader from "../../components/molecules/FeedHeader";
+import { AuthContext } from "../../context";
 
 const Dashboard = ({ navigation }) => {
+  const { removeUserCredential } = useContext(AuthContext);
   return (
     <Background>
       <FeedHeader />
@@ -20,15 +22,7 @@ const Dashboard = ({ navigation }) => {
 
       <DomainHorizantalList />
       <MatchedComapniesList />
-      <AppButton
-        title="logout"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "StartScreen" }],
-          })
-        }
-      />
+      <AppButton title="logout" onPress={() => removeUserCredential()} />
     </Background>
   );
 };

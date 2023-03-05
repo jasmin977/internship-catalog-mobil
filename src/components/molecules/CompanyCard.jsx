@@ -108,10 +108,10 @@ const CompanyCard = ({ company, taille }) => {
                   gap: 3,
                 }}
               >
-                {[0, 1, 2, 3].map((index) => {
+                {[0, 1, 2, 3].map((idx) => {
                   return (
                     <AntDesign
-                      key={index}
+                      key={`${company.company_name}_start_${idx}`}
                       color={theme.colors.primary}
                       size={15}
                       name="star"
@@ -190,9 +190,10 @@ const CompanyCard = ({ company, taille }) => {
               company.company_phone,
               "\n"
             ).length > 1 ? (
-            splitArray(company.company_phone, "\n").map((phone) => {
+            splitArray(company.company_phone, "\n").map((phone, idx) => {
               return (
                 <View
+                  key={`${company.company_name}__phone_${idx}`}
                   style={{
                     display: "flex",
                     flexDirection: "row",
