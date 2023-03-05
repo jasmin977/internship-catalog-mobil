@@ -18,7 +18,6 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState({ value: "", error: "" });
 
   const onLoginPressed = async () => {
-    console.log(email.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
@@ -37,6 +36,11 @@ const LoginScreen = ({ navigation }) => {
         index: 0,
         routes: [{ name: "Dashboard" }],
       });
+    else {
+      data.error.includes("email")
+        ? setEmail({ ...email, error: data.error })
+        : setPassword({ ...password, error: data.error });
+    }
   };
   return (
     <Background>
