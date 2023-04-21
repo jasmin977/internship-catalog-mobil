@@ -1,14 +1,12 @@
 import { View, Text } from "react-native";
 import React, { useContext } from "react";
-import ProfileIcon from "../atoms/ProfileIcon";
 import { theme } from "../../config";
 import { AuthContext } from "../../context";
+import { ProfileIcon } from "../atoms";
 
 const FeedHeader = () => {
   const { userInfo } = useContext(AuthContext);
-  console.log("====================================");
-  console.log(userInfo);
-  console.log("====================================");
+
   return (
     <View
       style={{
@@ -31,23 +29,19 @@ const FeedHeader = () => {
       >
         <Text
           style={{
-            fontWeight: "500",
-            fontSize: 20,
-            lineHeight: 23,
-            fontFamily: "MyFont-SemiBold",
-
+            fontSize: 25,
+            fontFamily: "title",
             color: theme.colors.text,
+            textTransform: "capitalize",
           }}
         >
           Hello {userInfo.first_name} 👋
         </Text>
         <Text
           style={{
-            fontWeight: "400",
-            fontFamily: "MyFont-Regular",
-
-            fontSize: 15,
-            lineHeight: 15,
+            fontFamily: "subTitle",
+            textTransform: "capitalize",
+            fontSize: 13,
             color: theme.colors.subtext,
           }}
         >

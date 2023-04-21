@@ -1,10 +1,21 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { TouchableHighlight, Text, StyleSheet } from "react-native";
 import React from "react";
 import { theme } from "../../config";
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-const AppButton = ({ onPress, title }) => {
+const AppButton = ({ iconName, onPress, title, additionalstyle }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{ ...styles.appButtonContainer, ...additionalstyle }}
+    >
+      {iconName ? (
+        <Ionicons color={theme.colors.bg} size={25} name={iconName} />
+      ) : (
+        <></>
+      )}
+
       <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -12,21 +23,22 @@ const AppButton = ({ onPress, title }) => {
 const styles = StyleSheet.create({
   appButtonContainer: {
     elevation: 5,
+    gap: 4,
     backgroundColor: theme.colors.primary,
     borderRadius: 5,
-    paddingVertical: 10,
-    // marginHorizontal: 20,
+    paddingVertical: 20,
+    flexDirection: "row",
     marginVertical: 10,
-    width: "90%",
+    // width: "100%",
+    justifyContent: "center",
     alignItems: "center",
   },
   appButtonText: {
-    fontSize: 18,
     color: "#fff",
-    fontWeight: "400",
-    fontFamily: "MyFont-SemiBold",
+
+    fontFamily: "title",
     alignSelf: "center",
-    fontSize: 20,
+    fontSize: 18,
     textTransform: "capitalize",
   },
 });

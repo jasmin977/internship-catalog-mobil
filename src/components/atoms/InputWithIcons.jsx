@@ -5,57 +5,66 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../config";
 
-const InputWithIcons = ({ iconNameLeft, iconNameRight, navigation }) => {
+const InputWithIcons = ({ iconNameLeft, action }) => {
+  const screenWidth = Dimensions.get("window").width;
+
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => navigation.navigate("SearchScreen")}
+    <View
+      style={{
+        width: screenWidth,
+
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20,
+      }}
     >
-      <Ionicons
-        name={iconNameLeft}
-        size={24}
-        color={theme.colors.subtext}
-        style={styles.icon}
-      />
-      <View>
-        <Text style={styles.input}>
-          search for internship or company name...
-        </Text>
-      </View>
-      <Ionicons
-        name={iconNameRight}
-        size={24}
-        color={theme.colors.primary}
-        style={styles.icon}
-      />
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.container} onPress={action}>
+        <Ionicons
+          name={iconNameLeft}
+          size={24}
+          color={theme.colors.subtext}
+          style={{ paddingEnd: 10 }}
+        />
+        <View>
+          <Text style={styles.input}>search your internship ...</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          backgroundColor: theme.colors.primary,
+          padding: 12,
+          borderRadius: 8,
+        }}
+      >
+        <Ionicons name="filter-outline" size={24} color={theme.colors.bg} />
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    width: "80%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: theme.colors.input,
-    borderRadius: 10,
+    borderRadius: 8,
     padding: 10,
-    paddingHorizontal: 20,
   },
   input: {
-    fontSize: 12,
-    fontFamily: "MyFont-Regular",
+    fontSize: 14,
+    fontFamily: "hint",
     marginHorizontal: 5,
     color: theme.colors.subtext,
   },
-  icon: {
-    // marginRight: 10,
-  },
+  icon: {},
 });
 
 export default InputWithIcons;

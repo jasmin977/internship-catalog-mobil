@@ -4,11 +4,22 @@ import { Picker } from "@react-native-picker/picker";
 import { Specialities } from "../../data/Specialities";
 import { theme } from "../../config";
 
-const SpecialityPicker = () => {
-  const [choosenValue, setChoosenValue] = useState(2);
+const SpecialityPicker = (props) => {
+  const [choosenValue, setChoosenValue] = useState(1);
   const [choosenIndex, setChoosenIndex] = useState(1);
   return (
-    <View>
+    <View style={{ gap: 5 }}>
+      <Text
+        style={{
+          textTransform: "capitalize",
+          fontWeight: "500",
+          fontSize: 13,
+          color: theme.colors.subtext,
+          fontFamily: "importantText",
+        }}
+      >
+        {props.label}
+      </Text>
       <Picker
         style={styles.picker}
         selectedValue={choosenValue}
@@ -27,22 +38,13 @@ const SpecialityPicker = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    flexDirection: "column",
-  },
-  text: {
-    fontSize: 20,
-    alignSelf: "center",
-  },
-
   picker: {
-    marginVertical: 10,
-    width: 320,
-    borderRadius: 5,
+    //marginVertical: 10,
+    width: 315,
     padding: 10,
     fontSize: 16,
+    paddingHorizontal: 10,
+
     backgroundColor: theme.colors.input,
   },
 });

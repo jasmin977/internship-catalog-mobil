@@ -9,7 +9,7 @@ import {
 import { theme } from "../../config";
 import { Feather } from "@expo/vector-icons";
 const MyInputText = (props) => {
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureTextEntry, setSecureTextEntry] = useState(false);
 
   const handleInputChange = (value) => {
     props.onChangeText(value);
@@ -21,12 +21,23 @@ const MyInputText = (props) => {
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          textTransform: "capitalize",
+          fontWeight: "500",
+          fontSize: 13,
+          color: theme.colors.subtext,
+          fontFamily: "importantText",
+        }}
+      >
+        {props.label}
+      </Text>
       <View style={styles.iconInput}>
         <TextInput
           selectionColor={theme.colors.primary}
           placeholder={props.hint}
           style={props.type ? styles.inputwithIcon : styles.inputwithoutIcon}
-          value={props.email}
+          value={props.value}
           onChangeText={handleInputChange}
           secureTextEntry={secureTextEntry}
           keyboardType={props.keyboardType}
@@ -50,7 +61,7 @@ const MyInputText = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    gap: 5,
   },
   iconInput: {
     justifyContent: "center",

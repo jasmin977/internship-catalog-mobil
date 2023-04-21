@@ -1,5 +1,10 @@
 import Regular from "../../assets/fonts/Nunito/Nunito-Regular.ttf";
 import SemiBold from "../../assets/fonts/Nunito/Nunito-SemiBold.ttf";
+import boldLato from "../../assets/fonts/Lato/Lato-Bold.ttf";
+import regularLato from "../../assets/fonts/Lato/Lato-Regular.ttf";
+import regularPoppin from "../../assets/fonts/Poppins/Poppins-Regular.ttf";
+import lightPoppin from "../../assets/fonts/Poppins/Poppins-Light.ttf";
+import medPoppin from "../../assets/fonts/Poppins/Poppins-Medium.ttf";
 
 const theme = {
   colors: {
@@ -13,6 +18,11 @@ const theme = {
   fonts: {
     "MyFont-Regular": Regular,
     "MyFont-SemiBold": SemiBold,
+    title: boldLato,
+    subTitle: regularLato,
+    importantText: medPoppin,
+    text: regularPoppin,
+    hint: lightPoppin,
     //add more fonts here
   },
 };

@@ -4,15 +4,22 @@ import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../config";
 import { useNavigation } from "@react-navigation/native";
 
-const GoBackBtn = () => {
+const GoBackBtn = ({ color, action }) => {
+  if (!color) {
+    color = theme.colors.text;
+  }
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => {
-        navigation.goBack();
-      }}
+      onPress={
+        action
+          ? action
+          : () => {
+              navigation.goBack();
+            }
+      }
     >
-      <Ionicons color={theme.colors.text} size={25} name="arrow-back-outline" />
+      <Ionicons color={color} size={25} name="arrow-back-outline" />
     </TouchableOpacity>
   );
 };

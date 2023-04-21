@@ -1,25 +1,42 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  StartScreen,
-  LoginScreen,
-  RegisterScreen,
-  ResetPasswordScreen,
-  Dashboard,
-} from "../screens";
 
-import VerifEmail from "../screens/register/VerifEmail";
-import CreatePass from "../screens/register/CreatePass";
-import CompleteProfile from "../screens/register/CompleteProfile";
-import Setting from "../screens/app/Setting";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../config";
-import Notifications from "../screens/app/Notifications";
-import Entreprises from "../screens/app/Entreprises";
-import FeedHeader from "../components/molecules/FeedHeader";
-import EntrepriseDetail from "../screens/app/EntrepriseDetail";
-import Search from "../screens/app/Search";
-import Profile from "../screens/app/Profile";
+
+import { View } from "react-native";
+import {
+  LoginScreen,
+  ResetPasswordScreen,
+  StartScreen,
+} from "../components/pages";
+import {
+  CompleteProfileScreen,
+  CreatePassScreen,
+  RegisterScreen,
+  VerifEmailScreen,
+} from "../components/pages/register";
+import { FeedHeader } from "../components/molecules";
+import {
+  NotificationsScreen,
+  SettingScreen,
+  FeedScreen,
+  SearchScreen,
+  ProfileScreen,
+  CalendarScreen,
+  EditProfileScreen,
+} from "../components/pages/app";
+import {
+  CompaniesScreen,
+  LikedCompaniescreen,
+  SavedCompaniesScreen,
+  WriteReviewScreen,
+  companyDetailScreen,
+} from "../components/pages/app/company";
+import {
+  IntershipProcessScreen,
+  ResultProcessScreen,
+} from "../components/pages/app/process";
 
 const Stack = createStackNavigator();
 
@@ -33,9 +50,12 @@ function AuthStackScreens() {
     >
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="VerifEmailScreen" component={VerifEmail} />
-      <Stack.Screen name="CreatePassScreen" component={CreatePass} />
-      <Stack.Screen name="CompleteProfileScreen" component={CompleteProfile} />
+      <Stack.Screen name="VerifEmailScreen" component={VerifEmailScreen} />
+      <Stack.Screen name="CreatePassScreen" component={CreatePassScreen} />
+      <Stack.Screen
+        name="CompleteProfileScreen"
+        component={CompleteProfileScreen}
+      />
       <Stack.Screen
         name="ResetPasswordScreen"
         component={ResetPasswordScreen}
@@ -55,9 +75,12 @@ export const StartupStackStackScreens = () => {
       <Stack.Screen name="StartScreen" component={StartScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="VerifEmailScreen" component={VerifEmail} />
-      <Stack.Screen name="CreatePassScreen" component={CreatePass} />
-      <Stack.Screen name="CompleteProfileScreen" component={CompleteProfile} />
+      <Stack.Screen name="VerifEmailScreen" component={VerifEmailScreen} />
+      <Stack.Screen name="CreatePassScreen" component={CreatePassScreen} />
+      <Stack.Screen
+        name="CompleteProfileScreen"
+        component={CompleteProfileScreen}
+      />
       <Stack.Screen
         name="ResetPasswordScreen"
         component={ResetPasswordScreen}
@@ -77,9 +100,12 @@ export const MyStack = () => {
       <Stack.Screen name="StartScreen" component={StartScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="VerifEmailScreen" component={VerifEmail} />
-      <Stack.Screen name="CreatePassScreen" component={CreatePass} />
-      <Stack.Screen name="CompleteProfileScreen" component={CompleteProfile} />
+      <Stack.Screen name="VerifEmailScreen" component={VerifEmailScreen} />
+      <Stack.Screen name="CreatePassScreen" component={CreatePassScreen} />
+      <Stack.Screen
+        name="CompleteProfileScreen"
+        component={CompleteProfileScreen}
+      />
       <Stack.Screen name="MainTabs" component={MyTabs} />
       <Stack.Screen
         name="ResetPasswordScreen"
@@ -98,69 +124,146 @@ export const MyTabs = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { position: "absolute", height: 60 },
-        tabBarActiveTintColor: theme.colors.primary,
+
+        tabBarStyle: {
+          zIndex: 1,
+          bottom: 10,
+          backgroundColor: theme.colors.primary,
+          height: 70,
+          marginHorizontal: 20,
+          borderRadius: 15,
+          position: "absolute",
+        },
+        tabBarInactiveTintColor: theme.colors.input,
+        tabBarActiveTintColor: theme.colors.input,
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeStackScreens}
-        options={({ navigation, route }) => {
+        options={() => {
           return {
             headerStyle: {
               height: 150,
             },
+
             headerTitle: () => <FeedHeader />,
             tabBarIcon: ({ focused, size, color }) => (
-              <Ionicons
-                focused={focused}
-                color={color}
-                size={size}
-                name={focused ? "home" : "home-outline"}
-              />
+              <View
+                style={{
+                  backgroundColor: focused
+                    ? "rgba(255, 255, 255, 0.3)"
+                    : "transparent",
+                  padding: 10,
+                  borderRadius: 10,
+                }}
+              >
+                <Ionicons
+                  focused={focused}
+                  color={color}
+                  size={size}
+                  name={focused ? "home" : "home-outline"}
+                />
+              </View>
             ),
           };
         }}
       />
       <Tab.Screen
         name="Settings"
-        component={Setting}
+        component={SettingScreen}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
-            <Ionicons
-              focused={focused}
-              color={color}
-              size={size}
-              name={focused ? "settings" : "settings-outline"}
-            />
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : "transparent",
+                padding: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Ionicons
+                focused={focused}
+                color={color}
+                size={size}
+                name={focused ? "settings" : "settings-outline"}
+              />
+            </View>
           ),
         }}
       />
       <Tab.Screen
-        name="entreprises"
-        component={EntrepriseStackScreens}
+        name="calendar"
+        component={CalendarScreen}
         options={{
+          // tabBarStyle: { display: "none" },
           tabBarIcon: ({ focused, size, color }) => (
-            <Ionicons
-              focused={focused}
-              color={color}
-              size={size}
-              name={focused ? "layers" : "layers-outline"}
-            />
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : "transparent",
+                padding: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Ionicons
+                focused={focused}
+                color={color}
+                size={size}
+                name={focused ? "calendar" : "calendar-outline"}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="intershipPorcess"
+        component={IntershipProcessStackScreens}
+        options={{
+          tabBarStyle: { display: "none" },
+          tabBarIcon: ({ focused, size, color }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : "transparent",
+                padding: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Ionicons
+                focused={focused}
+                color={color}
+                size={size}
+                name={focused ? "school" : "school-outline"}
+              />
+            </View>
           ),
         }}
       />
       <Tab.Screen
         name="notification"
-        component={Notifications}
+        component={NotificationsScreen}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
-            <Ionicons
-              focused={focused}
-              color={color}
-              size={size}
-              name={focused ? "notifications" : "notifications-outline"}
-            />
+            <View
+              style={{
+                backgroundColor: focused
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : "transparent",
+                padding: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Ionicons
+                focused={focused}
+                color={color}
+                size={size}
+                name={focused ? "notifications" : "notifications-outline"}
+              />
+            </View>
           ),
         }}
       />
@@ -168,18 +271,62 @@ export const MyTabs = () => {
   );
 };
 
-function EntrepriseStackScreens() {
+function CompaniesStackScreens({}) {
   return (
     <Stack.Navigator
-      initialRouteName="EntreprisesScreen"
+      initialRouteName="CompaniesScreen"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="EntreprisesScreen" component={Entreprises} />
+      <Stack.Screen name="CompaniesScreen" component={CompaniesScreen} />
       <Stack.Screen
-        name="EntrepriseDetailScreen"
-        component={EntrepriseDetail}
+        name="companyDetailScreen"
+        component={companyDetailScreen}
+      />
+      <Stack.Screen name="reviewScreen" component={WriteReviewScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function IntershipProcessStackScreens() {
+  return (
+    <Stack.Navigator
+      initialRouteName="IntershipProcessScreen"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen
+        name="IntershipProcessScreen"
+        component={IntershipProcessScreen}
+      />
+      <Stack.Screen
+        name="ResultProcessScreen"
+        component={ResultProcessScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileStackScreens() {
+  return (
+    <Stack.Navigator
+      initialRouteName="ProfileScreen"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <Stack.Screen name="SettingScreen" component={SettingScreen} />
+      <Stack.Screen
+        name="LikedCompaniesScreen"
+        component={LikedCompaniescreen}
+      />
+      <Stack.Screen
+        name="SavedCompaniesScreen"
+        component={SavedCompaniesScreen}
       />
     </Stack.Navigator>
   );
@@ -193,10 +340,12 @@ function HomeStackScreens() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Feed" component={Dashboard} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="SearchScreen" component={Search} />
-      <Stack.Screen name="entreprises" component={EntrepriseStackScreens} />
+      <Stack.Screen name="FeedScreen" component={FeedScreen} />
+      <Stack.Screen
+        name="ProfileStackScreens"
+        component={ProfileStackScreens}
+      />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
     </Stack.Navigator>
   );
 }

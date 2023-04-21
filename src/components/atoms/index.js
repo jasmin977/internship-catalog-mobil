@@ -1,0 +1,11 @@
+export { default as AppButton } from "./AppButton";
+export { default as Background } from "./Background";
+export { default as GoBackBtn } from "./GoBackBtn";
+export { default as Header } from "./Header";
+export { default as Logo } from "./Logo";
+export { default as ProfileIcon } from "./ProfileIcon";
+export { default as InputWithIcons } from "./InputWithIcons";
+export { default as Picker } from "./Picker";
+export { default as MyInputText } from "./MyInputText";
+export { default as SignUpInSwitch } from "./signUpInSwitch";
+export { default as StepsHeader } from "./StepsHeader";
