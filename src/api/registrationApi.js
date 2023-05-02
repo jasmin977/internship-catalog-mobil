@@ -1,6 +1,6 @@
 import apiRequestHandler from "./apiRequestHandler";
 
-const BASE_URL = "/user";
+const BASE_URL = "user-service/1.0.0";
 
 export default {
   requestEmailVerification: async (email) => {
@@ -17,9 +17,9 @@ export default {
       data: { email, code },
     });
   },
-  createAcount: async (email, password, cpassword) => {
+  createStudentAcount: async (email, password, cpassword) => {
     return apiRequestHandler({
-      url: BASE_URL + "/create_account",
+      url: BASE_URL + "/student/create_account",
       method: "post",
       data: { email, password, cpassword },
     });

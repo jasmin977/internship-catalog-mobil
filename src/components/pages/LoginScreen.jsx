@@ -24,6 +24,7 @@ const LoginScreen = ({ navigation }) => {
   const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
+    console.log("hellow");
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
@@ -75,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <AppButton title="login" onPress={() => onLoginPressed()} />
+      <AppButton title="login" onPress={onLoginPressed} />
       <SignUpInSwitch
         quest="Don't have an account"
         sol="Sign Up"

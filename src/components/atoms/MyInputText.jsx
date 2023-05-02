@@ -9,7 +9,7 @@ import {
 import { theme } from "../../config";
 import { Feather } from "@expo/vector-icons";
 const MyInputText = (props) => {
-  const [secureTextEntry, setSecureTextEntry] = useState(false);
+  const [secureTextEntry, setSecureTextEntry] = useState(props.secureTextEntry);
 
   const handleInputChange = (value) => {
     props.onChangeText(value);
@@ -45,7 +45,7 @@ const MyInputText = (props) => {
         {props.type ? (
           <TouchableOpacity onPress={toggleSecureTextEntry}>
             <Feather
-              name={secureTextEntry ? "eye-off" : "eye"}
+              name={secureTextEntry ? "eye" : "eye-off"}
               size={24}
               color={theme.colors.subtext}
             />

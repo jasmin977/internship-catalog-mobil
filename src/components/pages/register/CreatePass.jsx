@@ -23,7 +23,7 @@ const CreatePass = ({ route, navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    const [{ data, status }, err] = await registrationApi.createAcount(
+    const [{ data, status }, err] = await registrationApi.createStudentAcount(
       route.params.email,
       password.value,
       cpassword.value
