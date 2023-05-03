@@ -34,7 +34,7 @@ const EditProfile = () => {
               flex: 1,
               borderRadius: 10,
               marginHorizontal: 20,
-              height: 100,
+              height: 200,
               backgroundColor: theme.colors.input,
               alignItems: "center",
               paddingVertical: 30,

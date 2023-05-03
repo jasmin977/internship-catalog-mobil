@@ -1,7 +1,7 @@
 import { TextInput, View, ScrollView } from "react-native";
 import React, { useState } from "react";
 
-import companies from "../../../../data/output_2023-03-05_020409.json";
+import companiesData from "../../../../data/output_2023-03-05_020409.json";
 import { SplittedArray } from "../../../../helpers";
 import { Background } from "../../../atoms";
 import { CompanyCard } from "../../../molecules/company";
@@ -19,13 +19,21 @@ const Companies = ({ companies }) => {
         marginBottom: 100,
       }}
     >
-      {companies.slice(0, 20).map((company, idx) => (
-        <CompanyCard
-          // taille={320}
-          company={company}
-          key={`filtred_company_${idx}`}
-        />
-      ))}
+      {companies
+        ? companies.slice(0, 20).map((company, idx) => (
+            <CompanyCard
+              // taille={320}
+              company={company}
+              key={`filtred_company_${idx}`}
+            />
+          ))
+        : companiesData.slice(0, 20).map((company, idx) => (
+            <CompanyCard
+              // taille={320}
+              company={company}
+              key={`filtred_company_${idx}`}
+            />
+          ))}
     </View>
   );
 };

@@ -145,7 +145,7 @@ const CompanyDetail = ({ route }) => {
                   {[0, 1, 2, 3, 4].map((index) => {
                     return (
                       <Ionicons
-                        key={index}
+                        key={`star_index_${index}`}
                         color={theme.colors.primary}
                         size={25}
                         name="star"

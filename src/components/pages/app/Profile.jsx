@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const Profile = ({ personData }) => {
   const { userInfo } = useContext(AuthContext);
+  const { removeUserCredential } = useContext(AuthContext);
   {
     /**animated bottom view */
   }
@@ -77,12 +78,12 @@ const Profile = ({ personData }) => {
     personData = userInfo;
   }
 
-  const SettingItem = ({ name, iconName, routName }) => {
+  const SettingItem = ({ name, iconName, routName, action }) => {
     const navigation = useNavigation();
 
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate(routName)}
+        onPress={action ? action : () => navigation.navigate(routName)}
         style={{
           width: "100%",
           justifyContent: "space-between",
@@ -406,7 +407,12 @@ const Profile = ({ personData }) => {
                   routName={"SettingScreen"}
                   iconName={"settings-outline"}
                 />
-                <SettingItem name={"Log Out"} iconName={"log-out-outline"} />
+
+                <SettingItem
+                  action={() => removeUserCredential()}
+                  name={"Log Out"}
+                  iconName={"log-out-outline"}
+                />
               </View>
             </View>
           )}

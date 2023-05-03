@@ -94,7 +94,7 @@ const Review = ({ rating, setRating }) => {
       </View>
 
       {reviews.map((review, idx) => {
-        return <ReviewCard index={`review_crad_${idx}`} review={review} />;
+        return <ReviewCard key={`review_crad_${idx}`} review={review} />;
       })}
     </View>
   );

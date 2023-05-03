@@ -194,10 +194,10 @@ export const MyTabs = () => {
         }}
       />
       <Tab.Screen
-        name="calendar"
-        component={CalendarScreen}
+        name="companies"
+        component={CompaniesStackScreens}
         options={{
-          // tabBarStyle: { display: "none" },
+          tabBarStyle: { display: "none" },
           tabBarIcon: ({ focused, size, color }) => (
             <View
               style={{
@@ -212,7 +212,7 @@ export const MyTabs = () => {
                 focused={focused}
                 color={color}
                 size={size}
-                name={focused ? "calendar" : "calendar-outline"}
+                name={focused ? "layers" : "layers-outline"}
               />
             </View>
           ),
@@ -247,6 +247,8 @@ export const MyTabs = () => {
         name="notification"
         component={NotificationsScreen}
         options={{
+          tabBarBadge: 1,
+
           tabBarIcon: ({ focused, size, color }) => (
             <View
               style={{
