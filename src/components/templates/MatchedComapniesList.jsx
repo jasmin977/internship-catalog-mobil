@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import companies from "../../data/output_2023-03-05_020409.json";
 
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../../config";
 import { CompanyCard, CompanyCardOverview } from "../molecules/company";
+import { companiesApi } from "../../api";
 
 const MatchedComapniesList = () => {
   const navigation = useNavigation();
+  const [companies, setcompanies] = useState([]);
+  const fetchCompanies = async () => {
+    console.log("test");
+    const [res, err] = await companiesApi.getCompanyPage(1);
+    if (err) return console.log(err);
+    const { data, status } = res;
+    if (status === 200) {
+      setcompanies(data.companies);
+      return;
+    }
+    // TODO: handle errors or empty response
+    console.log("handle failed response");
+  };
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
 
   return (
     <View style={{ width: "100%", marginVertical: 20 }}>

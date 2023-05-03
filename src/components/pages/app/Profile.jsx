@@ -77,12 +77,12 @@ const Profile = ({ personData }) => {
     personData = userInfo;
   }
 
-  const SettingItem = ({ name, iconName, routName }) => {
+  const SettingItem = ({ name, iconName, routeName }) => {
     const navigation = useNavigation();
 
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate(routName)}
+        onPress={() => routeName && navigation.navigate(routeName)}
         style={{
           width: "100%",
           justifyContent: "space-between",
@@ -128,6 +128,7 @@ const Profile = ({ personData }) => {
       </TouchableOpacity>
     );
   };
+
   const navigation = useNavigation();
   return (
     <Transitioning.View

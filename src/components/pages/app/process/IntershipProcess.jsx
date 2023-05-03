@@ -60,6 +60,7 @@ const StickyHeader = ({ step, action }) => {
       >
         {stepHeaders.map((stepName, idx) => (
           <View
+            key={`process_${stepName}_${idx}`}
             index={`${idx}_step_process_${stepName}`}
             style={{
               flexDirection: "column",

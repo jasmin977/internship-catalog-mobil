@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../../../context";
 import { MatchedComapniesList } from "../../templates";
 import { FeedHeader } from "../../molecules";
-import { Background, InputWithIcons } from "../../atoms";
+import { AppButton, Background, InputWithIcons } from "../../atoms";
 import { ProcessReminder } from "../../molecules/process";
 import Search from "./Search";
 
@@ -26,8 +26,7 @@ const Dashboard = ({ navigation }) => {
 
           <ProcessReminder />
           <MatchedComapniesList />
-          {/**       <AppButton title="logout" onPress={() => removeUserCredential()} />
-           */}
+          <AppButton title="logout" onPress={() => removeUserCredential()} />
         </>
       )}
 

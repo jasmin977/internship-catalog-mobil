@@ -24,18 +24,19 @@ const LoginScreen = ({ navigation }) => {
   const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    console.log("hellow");
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
     }
-    const [{ data }, err] = await authApi.login(email.value, password.value);
+    const [{ data, headers }, err] = await authApi.login(
+      email.value,
+      password.value
+    );
 
-    console.log(data);
     if (err) return console.log(err);
     if (data.success) {
-      saveUserCredential(data.token, data.user);
+      saveUserCredential(headers.token, data.user);
     } else {
       data.error.includes("email")
         ? setEmail({ ...email, error: data.error })

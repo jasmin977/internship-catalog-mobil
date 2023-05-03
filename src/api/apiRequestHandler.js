@@ -2,8 +2,8 @@ import { api } from "../config";
 
 const apiRequestHandler = async (options) => {
   try {
-    const { data, status } = await api.request(options);
-    return [{ data, status }, null];
+    const { data, status, headers } = await api.request(options);
+    return [{ data, status, headers }, null];
   } catch (error) {
     if (error.response) {
       return [

@@ -4,9 +4,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext({
   isLoading: {},
   userToken: {},
-  userInfo: () => {},
-  saveUserCredential: () => {},
-  removeUserCredential: () => {},
+  userInfo: () => { },
+  saveUserCredential: () => { },
+  removeUserCredential: () => { },
 });
 
 export default AuthProvider = ({ children }) => {
@@ -59,6 +59,7 @@ export default AuthProvider = ({ children }) => {
       setisloading(true);
       await AsyncStorage.removeItem("user");
       await AsyncStorage.removeItem("userToken");
+      console.log(await AsyncStorage.getItem("userToken"))
       setUserInfo(null);
       setUserToken(null);
       setIsAuthenticated(false);
