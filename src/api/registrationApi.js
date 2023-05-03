@@ -1,6 +1,6 @@
 import apiRequestHandler from "./apiRequestHandler";
 
-const BASE_URL = "user-service/1.0.0";
+const BASE_URL = "user-service/2.0.0";
 
 export default {
   requestEmailVerification: async (email) => {
@@ -24,11 +24,20 @@ export default {
       data: { email, password, cpassword },
     });
   },
-  userPersonalInfo: async (email, first_name, last_name, major) => {
+  userPersonalInfo: async (email, first_name, last_name, major, token) => {
     return apiRequestHandler({
-      url: BASE_URL + "/user_personal_info",
+      url: BASE_URL + "/student/user_personal_info",
       method: "post",
       data: { email, first_name, last_name, major },
+      headers: {
+        authorization: `bearer ${token}`
+      }
+    });
+  },
+  getMajorLast: async () => {
+    return apiRequestHandler({
+      url: BASE_URL + "/major",
+      method: "get",
     });
   },
 };

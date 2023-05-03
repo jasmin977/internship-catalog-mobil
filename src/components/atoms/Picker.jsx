@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { Specialities } from "../../data/Specialities";
+// import { Specialities } from "../../data/Specialities";
 import { theme } from "../../config";
 
-const SpecialityPicker = (props) => {
+const SpecialityPicker = ({ values, selectedIdx, action }) => {
   const [choosenValue, setChoosenValue] = useState(1);
-  const [choosenIndex, setChoosenIndex] = useState(1);
+
   return (
     <View style={{ gap: 5 }}>
       <Text
@@ -18,19 +18,16 @@ const SpecialityPicker = (props) => {
           fontFamily: "importantText",
         }}
       >
-        {props.label}
+        {/* {values.length > selectedIdx ? values[selectedIdx].name : "select item"} */}
       </Text>
       <Picker
         style={styles.picker}
-        selectedValue={choosenValue}
-        onValueChange={(itemValue, itemIndex) => {
-          setChoosenValue(itemValue);
-          setChoosenIndex(itemIndex);
-        }}
+        selectedValue={selectedIdx}
+        onValueChange={action}
       >
-        {Specialities.map((item) => {
+        {values.map((item) => {
           return (
-            <Picker.Item key={item.id} value={item.id} label={item.title} />
+            <Picker.Item key={item.id} value={item.id} label={item.name} />
           );
         })}
       </Picker>

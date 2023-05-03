@@ -23,14 +23,16 @@ const CreatePass = ({ route, navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    const [{ data, status }, err] = await registrationApi.createStudentAcount(
-      route.params.email,
-      password.value,
-      cpassword.value
-    );
+    const [{ data, status, headers }, err] =
+      await registrationApi.createStudentAcount(
+        route.params.email,
+        password.value,
+        cpassword.value
+      );
     if (data?.success)
       navigation.replace("CompleteProfileScreen", {
         email: route.params.email,
+        token: headers.token,
       });
   };
   return (

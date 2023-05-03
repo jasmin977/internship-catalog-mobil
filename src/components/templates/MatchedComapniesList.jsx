@@ -9,8 +9,8 @@ import { companiesApi } from "../../api";
 const MatchedComapniesList = () => {
   const navigation = useNavigation();
   const [companies, setcompanies] = useState([]);
+
   const fetchCompanies = async () => {
-    console.log("test");
     const [res, err] = await companiesApi.getCompanyPage(1);
     if (err) return console.log(err);
     const { data, status } = res;
