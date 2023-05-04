@@ -24,11 +24,11 @@ export default {
       data: { email, password, cpassword },
     });
   },
-  userPersonalInfo: async (email, first_name, last_name, major, token) => {
+  userPersonalInfo: async (email, first_name, last_name, majorId, token) => {
     return apiRequestHandler({
       url: BASE_URL + "/student/user_personal_info",
       method: "post",
-      data: { email, first_name, last_name, major },
+      data: { email, first_name, last_name, majorId },
       headers: {
         authorization: `bearer ${token}`
       }
