@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   firstnameValidator,
   lastnameValidator,
@@ -22,6 +22,9 @@ const CompleteProfile = ({ route }) => {
   const [firstname, setFirstname] = useState({ value: "", error: "" });
   const [lastname, setLastname] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState(false);
+  const [choosenIndex, setChoosenIndex] = useState(0);
+  const [Specialities, setSpecialties] = useState([]);
+
   const onCreatePressed = async () => {
     const firstnameError = firstnameValidator(firstname.value);
     const lastnameError = lastnameValidator(lastname.value);
@@ -35,14 +38,31 @@ const CompleteProfile = ({ route }) => {
       userInfo.email,
       firstname.value,
       lastname.value,
-      "test"
+      Specialities[choosenIndex].id,
+      route.params.token
     );
     setLoading(false);
     if (err) console.log(err);
     if (data.success) {
-      saveUserCredential("token", data.user);
+      saveUserCredential(route.params.token, data.user);
     }
   };
+
+  const fetchMajors = async () => {
+    const [res, err] = await registrationApi.getMajorLast();
+    if (err) return console.log(err);
+    const { data, status } = res;
+    if (status === 200) {
+      setSpecialties(data.majors);
+      return;
+    }
+    // TODO: handle errors or empty response
+    console.log("handle failed response");
+  };
+
+  useEffect(() => {
+    fetchMajors();
+  }, []);
 
   return (
     <Background>
@@ -70,7 +90,13 @@ const CompleteProfile = ({ route }) => {
           hint="lastname"
           autoCapitalize="none"
         />
-        <Picker />
+        <Picker
+          values={Specialities}
+          selectedIdx={choosenIndex}
+          action={(itemValue, itemIndex) => {
+            setChoosenIndex(itemIndex);
+          }}
+        />
       </View>
 
       <AppButton

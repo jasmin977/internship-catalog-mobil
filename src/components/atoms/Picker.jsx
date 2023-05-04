@@ -1,33 +1,34 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { Specialities } from "../../data/Specialities";
+// import { Specialities } from "../../data/Specialities";
 import { theme } from "../../config";
 
-const SpecialityPicker = ({ label, value, handlePickerChange }) => {
+const SpecialityPicker = ({ label, values, selectedIdx, action }) => {
   return (
     <View style={{ gap: 5 }}>
-      <Text
-        style={{
-          textTransform: "capitalize",
-          fontWeight: "500",
-          fontSize: 13,
-          color: theme.colors.subtext,
-          fontFamily: "importantText",
-        }}
-      >
-        {label}
-      </Text>
+      {label && (
+        <Text
+          style={{
+            textTransform: "capitalize",
+            fontWeight: "500",
+            fontSize: 13,
+            color: theme.colors.subtext,
+            fontFamily: "importantText",
+          }}
+        >
+          {label}
+        </Text>
+      )}
+
       <Picker
         style={styles.picker}
-        selectedValue={value}
-        onValueChange={(itemValue, itemIndex) => {
-          handlePickerChange("major", itemIndex);
-        }}
+        selectedValue={selectedIdx}
+        onValueChange={action}
       >
-        {Specialities.map((item) => {
+        {values.map((item) => {
           return (
-            <Picker.Item key={item.id} value={item.id} label={item.title} />
+            <Picker.Item key={item.id} value={item.id} label={item.name} />
           );
         })}
       </Picker>

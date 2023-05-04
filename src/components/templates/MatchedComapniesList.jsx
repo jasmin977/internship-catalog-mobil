@@ -10,8 +10,8 @@ import staticcompanies from "../../data/output_2023-03-05_020409.json";
 const MatchedComapniesList = () => {
   const navigation = useNavigation();
   const [companies, setcompanies] = useState([]);
+
   const fetchCompanies = async () => {
-    console.log("test");
     const [res, err] = await companiesApi.getCompanyPage(1);
     if (err) return console.log(err);
     const { data, status } = res;
