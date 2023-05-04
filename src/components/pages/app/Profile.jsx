@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import React, { useContext, useRef, useState } from "react";
 import { Background } from "../../atoms";
 import StickyHeader from "../../molecules/StickyHeader";
@@ -11,9 +11,10 @@ import { Transition, Transitioning } from "react-native-reanimated";
 import { StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import HorizontalList from "../../molecules/HorizontalList";
 
 const Profile = ({ personData }) => {
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo, removeUserCredential } = useContext(AuthContext);
   {
     /**animated bottom view */
   }
@@ -77,12 +78,14 @@ const Profile = ({ personData }) => {
     personData = userInfo;
   }
 
-  const SettingItem = ({ name, iconName, routeName }) => {
+  const SettingItem = ({ name, iconName, routeName, action }) => {
     const navigation = useNavigation();
 
     return (
       <TouchableOpacity
-        onPress={() => routeName && navigation.navigate(routeName)}
+        onPress={
+          action ? action : () => routeName && navigation.navigate(routeName)
+        }
         style={{
           width: "100%",
           justifyContent: "space-between",
@@ -149,13 +152,14 @@ const Profile = ({ personData }) => {
             profileRoute={"profile"}
             name={personData.first_name}
           />
-          <View
+          <ImageBackground
+            source={require("../../../../assets/banner.png")}
             style={{
               flex: 1,
               borderRadius: 10,
               marginHorizontal: 20,
               height: 100,
-              backgroundColor: theme.colors.input,
+
               alignItems: "center",
               paddingVertical: 30,
             }}
@@ -185,42 +189,31 @@ const Profile = ({ personData }) => {
                 }}
               />
             </View>
-            <View style={{ alignItems: "center", gap: 5, paddingVertical: 5 }}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontFamily: "title",
-                  color: theme.colors.text,
-                  textTransform: "capitalize",
-                }}
-              >
-                {personData.first_name} {personData.last_name}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  textTransform: "lowercase",
-                  textAlign: "center",
-                  fontFamily: "subTitle",
-                  color: theme.colors.subtext,
-                }}
-              >
-                Le lorem ipsum est, en imprimerie, une suite de mots
-              </Text>
-            </View>
-          </View>
+
+            <Text
+              style={{
+                fontSize: 24,
+                fontFamily: "title",
+                paddingVertical: 5,
+                color: theme.colors.text,
+                textTransform: "capitalize",
+              }}
+            >
+              {personData.first_name} {personData.last_name}
+            </Text>
+          </ImageBackground>
 
           <View
             style={{
               flex: 1,
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: 150,
+              marginTop: 120,
               margin: 20,
               backgroundColor: theme.colors.bg,
               borderRadius: 8,
               padding: 10,
-              elevation: 15,
+              //    elevation: 15,
               shadowColor: "gray",
             }}
           >
@@ -325,17 +318,8 @@ const Profile = ({ personData }) => {
             >
               interest
             </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: "text",
-                color: theme.colors.subtext,
-              }}
-            >
-              Le lorem ipsum est, en imprimerie, une suite de mots sans
-              signification utilisée à titre provisoire pour calibrer une mise
-              en page, le texte définitif venant remplacer le faux-texte dès
-            </Text>
+
+            <HorizontalList />
           </View>
         </ScrollView>
         {/* The bottom view */}
@@ -407,7 +391,11 @@ const Profile = ({ personData }) => {
                   routName={"SettingScreen"}
                   iconName={"settings-outline"}
                 />
-                <SettingItem name={"Log Out"} iconName={"log-out-outline"} />
+                <SettingItem
+                  action={() => removeUserCredential()}
+                  name={"Log Out"}
+                  iconName={"log-out-outline"}
+                />
               </View>
             </View>
           )}

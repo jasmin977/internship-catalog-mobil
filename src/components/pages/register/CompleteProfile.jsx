@@ -18,10 +18,10 @@ import {
 import { AuthContext } from "../../../context";
 
 const CompleteProfile = ({ route }) => {
-  const { saveUserCredential } = useContext(AuthContext);
+  const { saveUserCredential, userInfo } = useContext(AuthContext);
   const [firstname, setFirstname] = useState({ value: "", error: "" });
   const [lastname, setLastname] = useState({ value: "", error: "" });
-
+  const [loading, setLoading] = useState(false);
   const onCreatePressed = async () => {
     const firstnameError = firstnameValidator(firstname.value);
     const lastnameError = lastnameValidator(lastname.value);
@@ -30,12 +30,14 @@ const CompleteProfile = ({ route }) => {
       setLastname({ ...lastname, error: lastnameError });
       return;
     }
+    setLoading(true);
     const [{ data }, err] = await registrationApi.userPersonalInfo(
-      route.params.email,
+      userInfo.email,
       firstname.value,
       lastname.value,
       "test"
     );
+    setLoading(false);
     if (err) console.log(err);
     if (data.success) {
       saveUserCredential("token", data.user);
@@ -44,12 +46,9 @@ const CompleteProfile = ({ route }) => {
 
   return (
     <Background>
-      <View style={{ alignSelf: "flex-start", paddingHorizontal: 20 }}>
-        <GoBackBtn />
-      </View>
       <Image
         source={require("../../../../assets/login.png")}
-        style={{ width: 300, height: 300 }}
+        style={{ width: 250, height: 250 }}
       />
 
       <Header title="Tell us about urself" />
@@ -57,7 +56,7 @@ const CompleteProfile = ({ route }) => {
       <View>
         <MyInputText
           returnKeyType="next"
-          email={firstname.value}
+          value={firstname.value}
           onChangeText={(text) => setFirstname({ value: text, error: "" })}
           errorText={firstname.error}
           hint="firstname"
@@ -65,7 +64,7 @@ const CompleteProfile = ({ route }) => {
         />
         <MyInputText
           returnKeyType="done"
-          email={lastname.value}
+          value={lastname.value}
           onChangeText={(text) => setLastname({ value: text, error: "" })}
           errorText={lastname.error}
           hint="lastname"
@@ -74,7 +73,11 @@ const CompleteProfile = ({ route }) => {
         <Picker />
       </View>
 
-      <AppButton title="Create" onPress={() => onCreatePressed()} />
+      <AppButton
+        loading={loading}
+        title="Create"
+        onPress={() => onCreatePressed()}
+      />
     </Background>
   );
 };

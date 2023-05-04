@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     color: theme.colors.subtext,
     textAlign: "center",
     width: 300,
-    fontFamily: "MyFont-Regular",
+    fontFamily: "hint",
   },
 });
 

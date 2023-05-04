@@ -8,15 +8,26 @@ import {
 } from "react-native";
 import { theme } from "../../config";
 import { Feather } from "@expo/vector-icons";
-const MyInputText = (props) => {
-  const [secureTextEntry, setSecureTextEntry] = useState(props.secureTextEntry);
+const MyInputText = ({
+  name,
+  label,
+  onChangeText,
+  hint,
+  value,
+  type,
+  onBlur,
+  secureTextEntry,
+  errorText,
+  keyboardType,
+}) => {
+  const [secureText, setSecureText] = useState(true);
 
   const handleInputChange = (value) => {
-    props.onChangeText(value);
+    onChangeText(value);
   };
 
   const toggleSecureTextEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
+    setSecureText(!secureText);
   };
 
   return (
@@ -30,22 +41,24 @@ const MyInputText = (props) => {
           fontFamily: "importantText",
         }}
       >
-        {props.label}
+        {label}
       </Text>
       <View style={styles.iconInput}>
         <TextInput
+          name={name}
           selectionColor={theme.colors.primary}
-          placeholder={props.hint}
-          style={props.type ? styles.inputwithIcon : styles.inputwithoutIcon}
-          value={props.value}
-          onChangeText={handleInputChange}
-          secureTextEntry={secureTextEntry}
-          keyboardType={props.keyboardType}
+          placeholder={hint}
+          style={type ? styles.inputwithIcon : styles.inputwithoutIcon}
+          value={value}
+          onBlur={onBlur}
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry ? secureText : false}
+          keyboardType={keyboardType}
         />
-        {props.type ? (
+        {type ? (
           <TouchableOpacity onPress={toggleSecureTextEntry}>
             <Feather
-              name={secureTextEntry ? "eye" : "eye-off"}
+              name={secureTextEntry ? "eye-off" : "eye"}
               size={24}
               color={theme.colors.subtext}
             />
@@ -53,9 +66,7 @@ const MyInputText = (props) => {
         ) : null}
       </View>
 
-      {props.errorText ? (
-        <Text style={styles.error}>{props.errorText}</Text>
-      ) : null}
+      {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
     </View>
   );
 };
@@ -80,12 +91,12 @@ const styles = StyleSheet.create({
   inputwithIcon: {
     width: 280,
     fontSize: 16,
-    fontFamily: "MyFont-Regular",
+    fontFamily: "text",
   },
   inputwithoutIcon: {
     width: 300,
     fontSize: 16,
-    fontFamily: "MyFont-Regular",
+    fontFamily: "text",
   },
   error: {
     color: "red",

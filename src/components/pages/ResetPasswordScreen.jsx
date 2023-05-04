@@ -34,7 +34,7 @@ const ResetPasswordScreen = (navigation) => {
       <MyInputText
         onSubmitEditing={() => onLoginPressed()}
         returnKeyType="done"
-        email={email.value}
+        value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         errorText={email.error}
         hint="example@issatso.u-sousse.tn"

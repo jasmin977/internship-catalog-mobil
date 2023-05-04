@@ -17,11 +17,15 @@ const RegisterScreen = ({ navigation }) => {
     error: "",
   });
 
-  const onLoginPressed = async () => {
+  const [loading, setLoading] = useState(false);
+
+  const onSendEmailPressed = async () => {
     const error = emailValidator(email.value);
     if (error) return setEmail({ ...email, error });
+    setLoading(true);
     const [{ data, status }, err] =
       await registrationApi.requestEmailVerification(email.value);
+    setLoading(false);
     if (err) return setEmail({ ...email, error: "Oops, Something went wrong" });
     if (data.success)
       navigation.replace("VerifEmailScreen", { email: email.value });
@@ -37,7 +41,7 @@ const RegisterScreen = ({ navigation }) => {
       <Header title="create your account" />
       <MyInputText
         returnKeyType="done"
-        email={email.value}
+        value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         errorText={email.error}
         hint="example@issatso.u-sousse.tn"
@@ -50,12 +54,16 @@ const RegisterScreen = ({ navigation }) => {
         style={{
           paddingVertical: 30,
           color: theme.colors.subtext,
-          fontFamily: "MyFont-Regular",
+          fontFamily: "text",
         }}
       >
         Please enter your Institution Email
       </Text>
-      <AppButton title="Send" onPress={() => onLoginPressed()} />
+      <AppButton
+        loading={loading}
+        title="Send"
+        onPress={() => onSendEmailPressed()}
+      />
       <SignUpInSwitch
         quest="Have an account already"
         sol="Sign In"

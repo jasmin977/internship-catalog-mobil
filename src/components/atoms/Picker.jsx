@@ -4,9 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Specialities } from "../../data/Specialities";
 import { theme } from "../../config";
 
-const SpecialityPicker = (props) => {
-  const [choosenValue, setChoosenValue] = useState(1);
-  const [choosenIndex, setChoosenIndex] = useState(1);
+const SpecialityPicker = ({ label, value, handlePickerChange }) => {
   return (
     <View style={{ gap: 5 }}>
       <Text
@@ -18,14 +16,13 @@ const SpecialityPicker = (props) => {
           fontFamily: "importantText",
         }}
       >
-        {props.label}
+        {label}
       </Text>
       <Picker
         style={styles.picker}
-        selectedValue={choosenValue}
+        selectedValue={value}
         onValueChange={(itemValue, itemIndex) => {
-          setChoosenValue(itemValue);
-          setChoosenIndex(itemIndex);
+          handlePickerChange("major", itemIndex);
         }}
       >
         {Specialities.map((item) => {

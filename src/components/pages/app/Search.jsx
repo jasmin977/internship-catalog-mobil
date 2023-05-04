@@ -1,36 +1,32 @@
-import { TextInput, View, ScrollView } from "react-native";
+import { TextInput, View, ScrollView, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 
 import companies from "../../../data/output_2023-03-05_020409.json";
 import { Background, GoBackBtn } from "../../atoms";
-import { SplittedArray } from "../../../helpers";
+
 import { theme } from "../../../config";
 import Companies from "./company/Companies";
-import { Text } from "react-native";
 
 const Search = ({ action, header }) => {
-  const [search, setSearch] = useState("");
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [masterDataSource, setMasterDataSource] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    setFilteredDataSource(companies);
-    setMasterDataSource(companies);
+    setFilteredData(companies);
   }, []);
 
-  const searchFilterFunction = (text) => {
-    if (text) {
-      const newData = masterDataSource.filter((item) => {
-        return item.company_name.toLowerCase().includes(text.toLowerCase());
-      });
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      setFilteredDataSource(masterDataSource);
-      setSearch(text);
-    }
+  const filterData = (term) => {
+    const filteredResults = Companies.filter((item) =>
+      item.company_name.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredData(filteredResults);
   };
 
+  const handleSearch = (text) => {
+    console.log(text);
+    setSearchTerm(text);
+    filterData(text);
+  };
   const StickyHeader = () => {
     return (
       <View
@@ -53,8 +49,8 @@ const Search = ({ action, header }) => {
             padding: 10,
           }}
           placeholder="Search..."
-          onChangeText={(text) => searchFilterFunction(text)}
-          value={search}
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
         />
       </View>
     );
@@ -87,11 +83,11 @@ const Search = ({ action, header }) => {
             color: theme.colors.text,
           }}
         >
-          ({filteredDataSource.length})
+          ({filteredData.length})
         </Text>
       </View>
 
-      <Companies companies={filteredDataSource} />
+      <Companies companies={filteredData} />
     </ScrollView>
   );
 };

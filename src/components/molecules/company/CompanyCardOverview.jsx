@@ -13,7 +13,7 @@ const CompanyCardOverview = ({ company, taille }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("companyDetailScreen", {
+        navigation.navigate("companies", {
           screen: "companyDetailScreen",
           params: { company },
         })

@@ -18,6 +18,7 @@ const FormInput = () => {
         flexDirection: "column",
         justifyContent: "center",
         gap: 15,
+        paddingHorizontal: 20,
         paddingVertical: 10,
       }}
     >
@@ -83,9 +84,9 @@ const CompanyDetailStep = ({ action }) => {
   return (
     <View
       style={{
-        //flex: 1,
+        flex: 1,
         width: screenWidth,
-        paddingHorizontal: 20,
+
         paddingVertical: 40,
         borderTopEndRadius: 30,
         marginTop: 30,
@@ -97,7 +98,7 @@ const CompanyDetailStep = ({ action }) => {
         style={{
           fontSize: 20,
           color: theme.colors.text,
-
+          paddingHorizontal: 20,
           fontFamily: "title",
           textTransform: "capitalize",
         }}
@@ -105,7 +106,7 @@ const CompanyDetailStep = ({ action }) => {
         enter the company details 🌱
       </Text>
 
-      <View style={{ gap: 5 }}>
+      <View style={{ gap: 5, alignItems: "center" }}>
         <FormInput />
         <AppButton onPress={action} title={"save and continue"} />
       </View>

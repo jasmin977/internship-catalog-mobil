@@ -53,6 +53,22 @@ function AuthStackScreens() {
       <Stack.Screen name="VerifEmailScreen" component={VerifEmailScreen} />
       <Stack.Screen name="CreatePassScreen" component={CreatePassScreen} />
       <Stack.Screen
+        name="ResetPasswordScreen"
+        component={ResetPasswordScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export const CompleteProfileStackScreens = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="CompleteProfileScreen"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen
         name="CompleteProfileScreen"
         component={CompleteProfileScreen}
       />
@@ -62,7 +78,7 @@ function AuthStackScreens() {
       />
     </Stack.Navigator>
   );
-}
+};
 
 export const StartupStackStackScreens = () => {
   return (
@@ -77,10 +93,7 @@ export const StartupStackStackScreens = () => {
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="VerifEmailScreen" component={VerifEmailScreen} />
       <Stack.Screen name="CreatePassScreen" component={CreatePassScreen} />
-      <Stack.Screen
-        name="CompleteProfileScreen"
-        component={CompleteProfileScreen}
-      />
+
       <Stack.Screen
         name="ResetPasswordScreen"
         component={ResetPasswordScreen}
@@ -194,10 +207,12 @@ export const MyTabs = () => {
         }}
       />
       <Tab.Screen
-        name="calendar"
-        component={CalendarScreen}
+        name="companies"
+        component={CompaniesStackScreens}
+        //   name="calendar"
+        // component={CalendarScreen}
         options={{
-          // tabBarStyle: { display: "none" },
+          tabBarStyle: { display: "none" },
           tabBarIcon: ({ focused, size, color }) => (
             <View
               style={{

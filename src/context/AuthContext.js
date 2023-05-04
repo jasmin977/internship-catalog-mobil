@@ -4,9 +4,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext({
   isLoading: {},
   userToken: {},
-  userInfo: () => { },
-  saveUserCredential: () => { },
-  removeUserCredential: () => { },
+  completedProfile: {},
+  userInfo: () => {},
+  saveUserCredential: () => {},
+  removeUserCredential: () => {},
 });
 
 export default AuthProvider = ({ children }) => {
@@ -14,22 +15,32 @@ export default AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setisloading] = useState(false);
+  const [completedProfile, setCompletedProfile] = useState(false);
 
-  // check if the user is already authenticated when the app starts
   useEffect(() => {
+    removeUserCredential();
     isLoggedIn();
   }, []);
 
   const isLoggedIn = async () => {
     try {
       setisloading(true);
+
       let isAuthenticated = await AsyncStorage.getItem("userToken");
 
       if (isAuthenticated) {
         let userInfo = await AsyncStorage.getItem("user");
         let userToken = await AsyncStorage.getItem("userToken");
+        console.log(userInfo, userToken);
         setUserToken(JSON.parse(userToken));
         setUserInfo(JSON.parse(userInfo));
+
+        if (!userInfo.registration_completed) {
+          setCompletedProfile(false);
+        } else {
+          setCompletedProfile(true);
+        }
+
         setIsAuthenticated(true);
       }
       setisloading(false);
@@ -45,6 +56,7 @@ export default AuthProvider = ({ children }) => {
       setUserInfo(user);
       setUserToken(token);
       setIsAuthenticated(true);
+      setCompletedProfile(user.registration_completed);
       AsyncStorage.setItem("user", JSON.stringify(user));
       AsyncStorage.setItem("userToken", JSON.stringify(token));
       setisloading(false);
@@ -59,7 +71,7 @@ export default AuthProvider = ({ children }) => {
       setisloading(true);
       await AsyncStorage.removeItem("user");
       await AsyncStorage.removeItem("userToken");
-      console.log(await AsyncStorage.getItem("userToken"))
+      console.log(await AsyncStorage.getItem("userToken"));
       setUserInfo(null);
       setUserToken(null);
       setIsAuthenticated(false);
@@ -75,6 +87,7 @@ export default AuthProvider = ({ children }) => {
         isAuthenticated,
         isLoading,
         userInfo,
+        completedProfile,
         userToken,
         removeUserCredential,
         saveUserCredential,

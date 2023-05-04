@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, StatusBar } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../../../../config";
 import { GoBackBtn } from "../../../atoms";
@@ -8,6 +8,7 @@ import {
   PersonalDetailStep,
   SupervisorsDetailStep,
 } from "../../../templates/process";
+import { ProcessFormContext } from "../../../../context";
 
 const StickyHeader = ({ step, action }) => {
   const stepHeaders = [
@@ -99,9 +100,9 @@ const StickyHeader = ({ step, action }) => {
 const IntershipProcess = () => {
   const navigation = useNavigation();
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const { currentStep } = useContext(ProcessFormContext);
 
-  const handleStepChange = () => {
+  /*  const handleStepChange = () => {
     if (currentStep < 2) {
       setCurrentStep(currentStep + 1);
     }
@@ -112,6 +113,12 @@ const IntershipProcess = () => {
     }
     if (currentStep <= 2 && currentStep > 0) {
       setCurrentStep(currentStep - 1);
+    }
+  }; */
+
+  const handleStepBack = () => {
+    if (currentStep === 1) {
+      navigation.goBack();
     }
   };
   const saveProcessHandle = () => {
@@ -129,9 +136,9 @@ const IntershipProcess = () => {
       <ScrollView stickyHeaderIndices={[0]}>
         <StickyHeader action={handleStepBack} step={currentStep} />
 
-        {currentStep === 0 && <PersonalDetailStep action={handleStepChange} />}
-        {currentStep === 1 && <CompanyDetailStep action={handleStepChange} />}
-        {currentStep === 2 && (
+        {currentStep === 1 && <PersonalDetailStep />}
+        {currentStep === 2 && <CompanyDetailStep />}
+        {currentStep === 3 && (
           <SupervisorsDetailStep action={saveProcessHandle} />
         )}
       </ScrollView>

@@ -13,7 +13,7 @@ const Domain = ({ specialties }) => {
               <Text
                 style={{
                   fontSize: 20,
-                  fontFamily: "MyFont-Regular",
+                  fontFamily: "text",
                   color: theme.colors.text,
                 }}
               >

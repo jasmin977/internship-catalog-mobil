@@ -19,7 +19,7 @@ const Companies = ({ companies }) => {
         marginBottom: 100,
       }}
     >
-      {companies.slice(0, 20).map((company, idx) => (
+      {companies.map((company, idx) => (
         <CompanyCard
           // taille={320}
           company={company}

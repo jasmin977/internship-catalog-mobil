@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
 import React, { useContext, useRef, useState } from "react";
 import { Background } from "../../atoms";
 import StickyHeader from "../../molecules/StickyHeader";
@@ -29,13 +29,15 @@ const EditProfile = () => {
       <View>
         <ScrollView stickyHeaderIndices={[0]}>
           <StickyHeader name={"Edit Profile"} />
-          <View
+          <ImageBackground
+            source={require("../../../../assets/banner.png")}
             style={{
               flex: 1,
+              marginBottom: 50,
               borderRadius: 10,
               marginHorizontal: 20,
               height: 100,
-              backgroundColor: theme.colors.input,
+
               alignItems: "center",
               paddingVertical: 30,
             }}
@@ -65,20 +67,8 @@ const EditProfile = () => {
                 }}
               />
             </View>
-            <View style={{ alignItems: "center", gap: 5, paddingVertical: 5 }}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontFamily: "title",
-                  color: theme.colors.text,
-                  textTransform: "capitalize",
-                }}
-              >
-                {userInfo.first_name} {userInfo.last_name}
-              </Text>
-            </View>
-          </View>
-          <ImagePickerBtn />
+          </ImageBackground>
+
           <PersonalDetailStep action={() => handleEditProfile} title={"Save"} />
           <View style={{ height: 100 }}></View>
         </ScrollView>

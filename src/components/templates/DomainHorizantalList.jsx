@@ -55,7 +55,7 @@ export default function DomainHorizantalList() {
         <TouchableOpacity>
           <Text
             style={{
-              fontFamily: "MyFont-Regular",
+              fontFamily: "text",
               fontSize: 15,
               color: theme.colors.subtext,
 

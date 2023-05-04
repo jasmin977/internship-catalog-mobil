@@ -14,7 +14,7 @@ import { registrationApi } from "../../../api";
 const CreatePass = ({ route, navigation }) => {
   const [password, setPassword] = useState({ value: "", error: "" });
   const [cpassword, setCpassword] = useState({ value: "", error: "" });
-
+  const [loading, setLoading] = useState(false);
   const onContinuePressed = async () => {
     const passwordError = passwordValidator(password.value);
     const cpasswordError = passwordValidator(password.value, cpassword.value);
@@ -23,11 +23,13 @@ const CreatePass = ({ route, navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
+    setLoading(true);
     const [{ data, status }, err] = await registrationApi.createStudentAcount(
       route.params.email,
       password.value,
       cpassword.value
     );
+    setLoading(false);
     if (data?.success)
       navigation.replace("CompleteProfileScreen", {
         email: route.params.email,
@@ -60,7 +62,7 @@ const CreatePass = ({ route, navigation }) => {
       <View>
         <MyInputText
           returnKeyType="next"
-          email={password.value}
+          value={password.value}
           onChangeText={(text) => setPassword({ value: text, error: "" })}
           errorText={password.error}
           hint="**********"
@@ -70,7 +72,7 @@ const CreatePass = ({ route, navigation }) => {
         />
         <MyInputText
           returnKeyType="done"
-          email={cpassword.value}
+          value={cpassword.value}
           onChangeText={(text) => setCpassword({ value: text, error: "" })}
           errorText={cpassword.error}
           hint="**********"
@@ -79,7 +81,11 @@ const CreatePass = ({ route, navigation }) => {
           type="psw"
         />
       </View>
-      <AppButton title="Continue" onPress={() => onContinuePressed()} />
+      <AppButton
+        loading={loading}
+        title="Continue"
+        onPress={() => onContinuePressed()}
+      />
     </Background>
   );
 };

@@ -1,10 +1,10 @@
-import { TouchableHighlight, Text, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, StyleSheet } from "react-native";
 import React from "react";
 import { theme } from "../../config";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const AppButton = ({ iconName, onPress, title, additionalstyle }) => {
+const AppButton = ({ iconName, onPress, title, additionalstyle, loading }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -16,7 +16,11 @@ const AppButton = ({ iconName, onPress, title, additionalstyle }) => {
         <></>
       )}
 
-      <Text style={styles.appButtonText}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator size="small" color={theme.colors.bg} />
+      ) : (
+        <Text style={styles.appButtonText}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     flexDirection: "row",
     marginVertical: 10,
-    width: "100%",
+    width: "90%",
     justifyContent: "center",
     alignItems: "center",
   },

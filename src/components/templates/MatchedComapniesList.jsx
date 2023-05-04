@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { theme } from "../../config";
 import { CompanyCard, CompanyCardOverview } from "../molecules/company";
 import { companiesApi } from "../../api";
+import staticcompanies from "../../data/output_2023-03-05_020409.json";
 
 const MatchedComapniesList = () => {
   const navigation = useNavigation();
@@ -23,7 +24,8 @@ const MatchedComapniesList = () => {
   };
 
   useEffect(() => {
-    fetchCompanies();
+    //fetchCompanies();
+    setcompanies(staticcompanies);
   }, []);
 
   return (

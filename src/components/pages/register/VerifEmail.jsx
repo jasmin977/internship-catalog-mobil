@@ -8,10 +8,12 @@ import { theme } from "../../../config";
 const VerifEmail = ({ route, navigation }) => {
   const [code, setCode] = useState(["", "", "", ""]);
   const [errorText, seterrorText] = useState("");
+  const [loading, setLoading] = useState(false);
   const { email } = route.params;
   const handleResendCode = async () => {
     const [{ data, status }, err] =
       await registrationApi.requestEmailVerification(email);
+
     if (err) return console.log(err);
     console.log(`status: ${status}`);
     console.log(data);
@@ -19,10 +21,12 @@ const VerifEmail = ({ route, navigation }) => {
   };
 
   const hanldeVerifyEmail = async () => {
+    setLoading(true);
     const [{ status, data }, err] = await registrationApi.verifyEmail(
       email,
       code.join("")
     );
+    setLoading(false);
     if (err) return console.log(err);
     if (data.success) {
       navigation.replace("CreatePassScreen", { email });
@@ -65,7 +69,11 @@ const VerifEmail = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <AppButton title="Continue" onPress={hanldeVerifyEmail} />
+      <AppButton
+        loading={loading}
+        title="Continue"
+        onPress={hanldeVerifyEmail}
+      />
     </Background>
   );
 };

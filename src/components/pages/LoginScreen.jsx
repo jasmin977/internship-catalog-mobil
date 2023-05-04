@@ -29,19 +29,27 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    const [{ data, headers }, err] = await authApi.login(
+    const userJson = {
+      id: 1,
+      first_name: "yasmin",
+      last_name: "ban abdeljelil",
+      email: "bayasmin@gmail.com",
+      registration_completed: true,
+    };
+    saveUserCredential("token", userJson);
+    /*  const [{ data, headers }, err] = await authApi.login(
       email.value,
       password.value
     );
-
+    
     if (err) return console.log(err);
     if (data.success) {
       saveUserCredential(headers.token, data.user);
     } else {
       data.error.includes("email")
-        ? setEmail({ ...email, error: data.error })
-        : setPassword({ ...password, error: data.error });
-    }
+      ? setEmail({ ...email, error: data.error })
+      : setPassword({ ...password, error: data.error });
+    } */
   };
   return (
     <Background>
@@ -51,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <Header title="welcome back" />
       <MyInputText
-        email={email.value}
+        value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         errorText={email.error}
         hint="example@issatso-u.tn"
@@ -61,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <MyInputText
         returnKeyType="done"
-        email={password.value}
+        value={password.value}
         onChangeText={(text) => setPassword({ value: text, error: "" })}
         errorText={password.error}
         hint="**********"
