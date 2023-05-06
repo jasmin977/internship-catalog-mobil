@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppButton,
   Background,
@@ -10,8 +10,11 @@ import {
 import { theme } from "../../../config";
 import { passwordValidator } from "../../../helpers";
 import { registrationApi } from "../../../api";
+import { AuthContext } from "../../../context";
 
 const CreatePass = ({ route, navigation }) => {
+  const { saveUserCredential } = useContext(AuthContext);
+
   const [password, setPassword] = useState({ value: "", error: "" });
   const [cpassword, setCpassword] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState(false);
@@ -31,17 +34,14 @@ const CreatePass = ({ route, navigation }) => {
         cpassword.value
       );
     setLoading(false);
-    if (data?.success)
-      navigation.replace("CompleteProfileScreen", {
+    if (data?.success) saveUserCredential(headers.token, data.user);
+    /* navigation.replace("CompleteProfileScreen", {
         email: route.params.email,
         token: headers.token,
-      });
+      }); */
   };
   return (
     <Background>
-      <View style={{ alignSelf: "flex-start", paddingHorizontal: 20 }}>
-        <GoBackBtn />
-      </View>
       <Image
         source={require("../../../icons/lock.png")}
         style={{ width: 100, height: 100 }}

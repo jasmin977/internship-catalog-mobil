@@ -20,7 +20,7 @@ const CompanyCardOverview = ({ company, taille }) => {
       }
       style={{
         display: "flex",
-        alignSelf: "stretch",
+        alignSelf: "center",
         width: taille,
         borderRadius: 20,
         backgroundColor: theme.colors.input,
@@ -120,15 +120,15 @@ const CompanyCardOverview = ({ company, taille }) => {
         >
           <CompanyInfoItem
             color={theme.colors.subtext}
-            iconName={"logo-linkedin"}
+            iconName={"globe-outline"}
             text={"website"}
-            taille={15}
+            taille={14}
           />
           <CompanyInfoItem
             color={theme.colors.subtext}
-            iconName={"globe-outline"}
+            iconName={"logo-linkedin"}
             text={"linkedin"}
-            taille={15}
+            taille={14}
           />
         </View>
 
@@ -136,7 +136,7 @@ const CompanyCardOverview = ({ company, taille }) => {
           color={theme.colors.subtext}
           iconName={"location-outline"}
           text={company.company_city}
-          taille={15}
+          taille={14}
         />
       </View>
     </TouchableOpacity>

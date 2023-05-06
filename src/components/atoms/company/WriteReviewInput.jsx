@@ -12,6 +12,7 @@ const WriteReviewInput = () => {
           height: 150,
           borderColor: theme.colors.subtext,
           borderWidth: 1.8,
+          textAlignVertical: "top",
           borderRadius: 8,
           padding: 10,
           fontSize: 18,

@@ -5,24 +5,36 @@ import {
   Dimensions,
   TouchableOpacity,
   StyleSheet,
+  ToastAndroid,
 } from "react-native";
-
-import React, { useState } from "react";
+import { Avatar, Overlay } from "react-native-elements";
+import React, { useContext, useEffect, useState } from "react";
 
 import { theme } from "../../../config";
-import { AppButton, Picker } from "../../atoms";
+import { AppButton } from "../../atoms";
+import { ProcessFormContext } from "../../../context";
+import { useNavigation } from "@react-navigation/native";
 
+const data = [
+  { id: 1, name: "mohamed ali meddeb", email: "meddeb268@gmail.com" },
+  { id: 2, name: "yasmin ben abdeljelil", email: "bayasmin2@gmail.com" },
+  { id: 3, name: "youssef majdoub", email: "majdoub@gmail.com" },
+  { id: 4, name: "arwa hmila", email: "arwa.kotch@gmail.com" },
+  { id: 5, name: "mohamed ali meddeb", email: "meddeb268@gmail.com" },
+  { id: 6, name: "yasmin ben abdeljelil", email: "bayasmin2@gmail.com" },
+  { id: 8, name: "youssef majdoub", email: "majdoub@gmail.com" },
+  { id: 9, name: "arwa hmila", email: "arwa.kotch@gmail.com" },
+];
 const SupervisorsDetailStep = ({ action }) => {
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const navigation = useNavigation();
+  console.log(selectedItems);
 
-  const data = [
-    { id: "1", title: "prof 1" },
-    { id: "2", title: "prof 2" },
-    { id: "3", title: "prof 3" },
-    { id: "4", title: "prof 4" },
-    // Add more items as needed
-  ];
-
+  const showToast = () => {
+    ToastAndroid.show("You can select 3 only !", ToastAndroid.SHORT);
+  };
   const handleCheckboxToggle = (item) => {
     if (selectedItems.includes(item.id)) {
       setSelectedItems(
@@ -31,36 +43,82 @@ const SupervisorsDetailStep = ({ action }) => {
     } else if (selectedItems.length < 3) {
       setSelectedItems([...selectedItems, item.id]);
     }
+    if (selectedItems.length === 3) {
+      showToast();
+    }
+  };
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+  const handleLongPress = () => {
+    toggleOverlay();
+  };
+  const SupervisorItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onLongPress={handleLongPress}
+        style={styles.checkboxContainer}
+        onPress={() => handleCheckboxToggle(item)}
+      >
+        <View
+          style={[
+            styles.checkbox,
+            selectedItems.includes(item.id) && styles.checkboxSelected,
+            { width: screenWidth - 40, justifyContent: "flex-start" },
+          ]}
+        >
+          <Avatar
+            size={40}
+            containerStyle={{
+              backgroundColor: theme.colors.primary,
+            }}
+            rounded
+            title={`${item.name.substring(0, 2).toUpperCase()}`}
+          />
+          <View style={{ flexDirection: "column" }}>
+            <Text style={styles.checkboxLabel}>{item.name}</Text>
+            <Text style={styles.checkboxEmail}>{item.email}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.checkboxContainer}
-      onPress={() => handleCheckboxToggle(item)}
-    >
-      <View
-        style={[
-          styles.checkbox,
-          selectedItems.includes(item) && styles.checkboxSelected,
-        ]}
-      />
-      <Text style={styles.checkboxLabel}>{item.title}</Text>
-    </TouchableOpacity>
-  );
+  //  choices form
 
-  const screenHeight = Dimensions.get("window").height;
+  const { updateprocessForm, goToNextStep, processForm } =
+    useContext(ProcessFormContext);
+
+  useEffect(() => {
+    if (processForm["step3"]) {
+      console.log("step3", processForm["step3"]);
+      setSelectedItems(processForm["step3"]);
+    }
+  }, []);
+
+  const submitStep3 = () => {
+    setLoading(true);
+    if (selectedItems.length !== 3) {
+      showToast();
+
+      setLoading(false);
+    } else {
+      updateprocessForm({ step3: selectedItems });
+      goToNextStep();
+      setLoading(false);
+      navigation.navigate("ResultProcessScreen");
+    }
+  };
+
   const screenWidth = Dimensions.get("window").width;
   return (
     <View
       style={{
         flex: 1,
         width: screenWidth,
-        height: 580,
 
-        paddingVertical: 40,
-        borderTopEndRadius: 30,
         marginTop: 30,
-        borderTopStartRadius: 30,
+
         backgroundColor: theme.colors.bg,
       }}
     >
@@ -85,46 +143,81 @@ const SupervisorsDetailStep = ({ action }) => {
           textTransform: "capitalize",
         }}
       >
-        choose 3 Institute supervisors.
+        choose 3 supervisors from your Institute.
       </Text>
-      <View style={{ gap: 5, alignItems: "center" }}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.container}
-        />
+      <View
+        style={{
+          flex: 1,
+          paddingTop: 10,
+          paddingBottom: 80,
+          alignItems: "center",
+        }}
+      >
+        {data.map((item, index) => {
+          return <SupervisorItem key={`supervisoritem_${index}`} item={item} />;
+        })}
       </View>
-      <View style={{ width: "100%", position: "absolute", bottom: 0 }}>
-        <AppButton onPress={action} title={"save"} />
+      <View
+        style={{
+          width: "100%",
+          alignItems: "center",
+          position: "absolute",
+          bottom: 0,
+        }}
+      >
+        <AppButton loading={loading} onPress={submitStep3} title={"save"} />
       </View>
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <View style={{ width: 300, height: 300 }}>
+          <Text>Professor profile here</Text>
+        </View>
+      </Overlay>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: "center",
     padding: 16,
+    gap: 20,
   },
   checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 12,
+    alignItems: "flex-start",
+    flex: 1,
+    // alignItems: "center",
+    padding: 5,
   },
   checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 4,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 5,
+    alignItems: "center",
+    borderRadius: 8,
+    backgroundColor: theme.colors.input,
+    borderColor: "transparent",
     borderWidth: 2,
-    borderColor: "#999",
+    padding: 10,
     marginRight: 8,
   },
   checkboxSelected: {
-    backgroundColor: "#999",
-    borderColor: "#999", // Added to change the border color when selected
+    backgroundColor: "rgba(42, 106, 253,0.2)",
+    borderColor: theme.colors.primary,
+    borderWidth: 2,
   },
   checkboxLabel: {
-    fontSize: 16,
-    color: "#333",
+    fontSize: 17,
+
+    color: theme.colors.text,
+    fontFamily: "text",
+    textTransform: "capitalize",
+  },
+  checkboxEmail: {
+    fontSize: 15,
+
+    color: theme.colors.subtext,
+    fontFamily: "subTitle",
+    textTransform: "lowercase",
   },
 });
 

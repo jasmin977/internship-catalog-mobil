@@ -18,7 +18,7 @@ import {
 import { AuthContext } from "../../../context";
 
 const CompleteProfile = ({ route }) => {
-  const { saveUserCredential, userInfo } = useContext(AuthContext);
+  const { saveUserCredential, userInfo, userToken } = useContext(AuthContext);
   const [firstname, setFirstname] = useState({ value: "", error: "" });
   const [lastname, setLastname] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState(false);
@@ -39,12 +39,12 @@ const CompleteProfile = ({ route }) => {
       firstname.value,
       lastname.value,
       Specialities[choosenIndex].id,
-      route.params.token
+      userToken
     );
     setLoading(false);
     if (err) console.log(err);
     if (data.success) {
-      saveUserCredential(route.params.token, data.user);
+      saveUserCredential(userToken, data.user);
     }
   };
 

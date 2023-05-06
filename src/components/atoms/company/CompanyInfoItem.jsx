@@ -10,7 +10,7 @@ const CompanyInfoItem = ({ iconName, text, taille, color }) => {
         flexDirection: "row",
         gap: 3,
         justifyContent: "center",
-        alignItems: "baseline",
+        alignItems: "flex-start",
       }}
     >
       <Ionicons
@@ -20,7 +20,8 @@ const CompanyInfoItem = ({ iconName, text, taille, color }) => {
       />
       <Text
         style={{
-          fontFamily: "text",
+          textAlign: "auto",
+          fontFamily: "hint",
           fontSize: taille ? taille : 17,
           color: color ? color : theme.colors.text,
         }}

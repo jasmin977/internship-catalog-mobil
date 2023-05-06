@@ -1,6 +1,6 @@
 import apiRequestHandler from "./apiRequestHandler";
 
-const BASE_URL = "user-service/2.0.0";
+const BASE_URL = "user-service/1.0.0";
 
 export default {
   requestEmailVerification: async (email) => {
@@ -30,8 +30,8 @@ export default {
       method: "post",
       data: { email, first_name, last_name, majorId },
       headers: {
-        authorization: `bearer ${token}`
-      }
+        authorization: `bearer ${token}`,
+      },
     });
   },
   getMajorLast: async () => {

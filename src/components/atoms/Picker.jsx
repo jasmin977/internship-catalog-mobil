@@ -7,19 +7,17 @@ import { theme } from "../../config";
 const SpecialityPicker = ({ label, values, selectedIdx, action }) => {
   return (
     <View style={{ gap: 5 }}>
-      {label && (
-        <Text
-          style={{
-            textTransform: "capitalize",
-            fontWeight: "500",
-            fontSize: 13,
-            color: theme.colors.subtext,
-            fontFamily: "importantText",
-          }}
-        >
-          {label}
-        </Text>
-      )}
+      <Text
+        style={{
+          textTransform: "capitalize",
+          fontWeight: "500",
+          fontSize: 13,
+          color: theme.colors.subtext,
+          fontFamily: "importantText",
+        }}
+      >
+        {label}
+      </Text>
 
       <Picker
         style={styles.picker}

@@ -17,8 +17,16 @@ export default AuthProvider = ({ children }) => {
   const [isLoading, setisloading] = useState(false);
   const [completedProfile, setCompletedProfile] = useState(false);
 
+  const userData = {
+    id: 19,
+    first_name: "Mohammed ali",
+    last_name: "Meddeb",
+    email: "userl@issatso.u-sousse.tn",
+    registration_completed: true,
+  };
   useEffect(() => {
     removeUserCredential();
+    saveUserCredential("token", userData);
     isLoggedIn();
   }, []);
 
@@ -27,20 +35,15 @@ export default AuthProvider = ({ children }) => {
       setisloading(true);
 
       let isAuthenticated = await AsyncStorage.getItem("userToken");
-
+      console.log("isAuthenticated", isAuthenticated);
       if (isAuthenticated) {
-        let userInfo = await AsyncStorage.getItem("user");
-        let userToken = await AsyncStorage.getItem("userToken");
+        let userInfo = JSON.parse(await AsyncStorage.getItem("user"));
+        let userToken = JSON.parse(await AsyncStorage.getItem("userToken"));
         console.log(userInfo, userToken);
-        setUserToken(JSON.parse(userToken));
-        setUserInfo(JSON.parse(userInfo));
+        setUserToken(userToken);
+        setUserInfo(userInfo);
 
-        if (!userInfo.registration_completed) {
-          setCompletedProfile(false);
-        } else {
-          setCompletedProfile(true);
-        }
-
+        setCompletedProfile(userInfo.registration_completed);
         setIsAuthenticated(true);
       }
       setisloading(false);

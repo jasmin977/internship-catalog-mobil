@@ -13,9 +13,10 @@ import { AppButton, Background, GoBackBtn } from "../../../atoms";
 import { CompanyInfoItem } from "../../../atoms/company";
 import { Overview, Review } from "../../../templates/company";
 import { theme } from "../../../../config";
-import { useNavigation } from "@react-navigation/native";
 import { Transition, Transitioning } from "react-native-reanimated";
 import WriteReview from "./WriteReview";
+const defaultCompanyImage =
+  "https://icon-library.com/images/companies-icon/companies-icon-4.jpg";
 
 const StickyHeader = ({ name }) => {
   return (
@@ -29,7 +30,7 @@ const StickyHeader = ({ name }) => {
         alignItems: "center",
         gap: 5,
         paddingHorizontal: 20,
-        paddingBottom: 20,
+        paddingBottom: 10,
       }}
     >
       <GoBackBtn />
@@ -47,9 +48,12 @@ const StickyHeader = ({ name }) => {
   );
 };
 const CompanyDetail = ({ route }) => {
-  const navigation = useNavigation();
-
-  const { company } = route.params;
+  let company;
+  if (route.params === undefined) {
+    company = {};
+  } else {
+    company = route.params.company;
+  }
   const [rating, setRating] = useState(0);
   const [currentView, setCurrentView] = useState("Description");
   const [isCompanySaved, setIsCompanySaved] = useState(false);
@@ -99,7 +103,7 @@ const CompanyDetail = ({ route }) => {
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
-        paddingTop: StatusBar.currentHeight + 20,
+        paddingTop: StatusBar.currentHeight,
         backgroundColor: theme.colors.bg,
       }}
     >
@@ -185,7 +189,9 @@ const CompanyDetail = ({ route }) => {
                 >
                   <Image
                     source={{
-                      uri: company.company_logo_url,
+                      uri: company.company_logo_url
+                        ? company.company_logo_url
+                        : defaultCompanyImage,
                     }}
                     style={{
                       width: 70,
@@ -199,6 +205,7 @@ const CompanyDetail = ({ route }) => {
                   <Text
                     style={{
                       fontSize: 24,
+                      textAlign: "center",
                       fontFamily: "title",
                       color: theme.colors.text,
                     }}
@@ -206,11 +213,13 @@ const CompanyDetail = ({ route }) => {
                     {company.company_name}
                   </Text>
                   {/**location */}
-                  <CompanyInfoItem
-                    iconName="location-outline"
-                    text={company.company_city}
-                  />
 
+                  {(company.company_address || company.company_city) && (
+                    <CompanyInfoItem
+                      iconName="location-outline"
+                      text={`${company.company_address}, ${company.company_city}`}
+                    />
+                  )}
                   {/**likes& reviews */}
                   <View style={{ flexDirection: "row", gap: 10 }}>
                     {/**likes */}
@@ -266,7 +275,7 @@ const CompanyDetail = ({ route }) => {
             </View>
             <View style={styles.viewContainer}>
               {currentView === "Description" && (
-                <Overview overview={company.overview}></Overview>
+                <Overview company={company}></Overview>
               )}
 
               {currentView === "Review" && (
@@ -413,6 +422,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   viewContainer: {
+    paddingHorizontal: 10,
     paddingBottom: 100,
   },
   likButton: {

@@ -9,7 +9,7 @@ const ReviewCard = ({ review }) => {
     <View
       style={{
         padding: 5,
-
+        paddingHorizontal: 10,
         gap: 2,
         flexDirection: "column",
         alignItems: "center",

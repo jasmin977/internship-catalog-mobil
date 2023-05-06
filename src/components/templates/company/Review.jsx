@@ -51,7 +51,7 @@ const Review = ({ rating, setRating }) => {
         alignItems: "flex-start",
       }}
     >
-      <View>
+      <View style={{ paddingHorizontal: 10 }}>
         <Text
           style={{
             fontFamily: "title",
@@ -72,10 +72,19 @@ const Review = ({ rating, setRating }) => {
         </Text>
         <RateOption rating={rating} setRating={setRating} />
       </View>
-      <View style={{ gap: 5, flexDirection: "row", alignItems: "baseline" }}>
+      <View
+        style={{
+          gap: 5,
+          paddingHorizontal: 10,
+          flexDirection: "row",
+          alignItems: "baseline",
+          justifyContent: "flex-start",
+        }}
+      >
         <Text
           style={{
             fontFamily: "title",
+
             fontSize: 22,
             color: theme.colors.text,
           }}

@@ -13,7 +13,7 @@ const StartNavigator = () => {
   const { isLoading, isAuthenticated, completedProfile } =
     useContext(AuthContext);
 
-  console.log(completedProfile);
+  console.log("completedProfile:", completedProfile);
 
   if (isLoading) {
     return (
@@ -25,6 +25,7 @@ const StartNavigator = () => {
       </View>
     );
   }
+
   return (
     <NavigationContainer>
       {isAuthenticated && !completedProfile && <CompleteProfileStackScreens />}

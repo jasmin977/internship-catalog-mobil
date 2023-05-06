@@ -1,64 +1,95 @@
 import { TextInput, View, ScrollView, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 
-import companies from "../../../data/output_2023-03-05_020409.json";
+import companiesList from "../../../data/output_2023-03-05_020409.json";
 import { Background, GoBackBtn } from "../../atoms";
 
 import { theme } from "../../../config";
 import Companies from "./company/Companies";
+import { companiesApi } from "../../../api";
+import { Button } from "react-native";
+
+const StickyHeader = ({ action, searchTerm, handleSearch }) => {
+  return (
+    <View
+      style={{
+        width: "100%",
+        flexDirection: "row",
+        backgroundColor: theme.colors.bg,
+        alignItems: "center",
+        gap: 5,
+        paddingHorizontal: 20,
+        paddingBottom: 10,
+      }}
+    >
+      <GoBackBtn action={action} />
+      <TextInput
+        style={{
+          backgroundColor: theme.colors.input,
+          borderRadius: 10,
+          width: "90%",
+          padding: 10,
+        }}
+        placeholder="Search..."
+        defaultValue={searchTerm}
+        onChangeText={(t) => handleSearch(t)}
+      />
+    </View>
+  );
+};
 
 const Search = ({ action, header }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
 
-  useEffect(() => {
-    setFilteredData(companies);
-  }, []);
-
-  const filterData = (term) => {
-    const filteredResults = Companies.filter((item) =>
-      item.company_name.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredData(filteredResults);
+  const filterData = async (query) => {
+    const [{ data, status, headers }, err] =
+      await companiesApi.companyAutoComplete(query);
+    if (err) console.log(err);
+    if (status !== 200) {
+      setError(data.message);
+    }
+    console.log(data.result);
+    if (data?.success) setFilteredData(data.result);
   };
 
   const handleSearch = (text) => {
-    console.log(text);
     setSearchTerm(text);
     filterData(text);
   };
-  const StickyHeader = () => {
+
+  useEffect(() => {
+    setIsLoading(true);
+    // handleSearch(searchTerm).then(() => {
+    setFilteredData(companiesList);
+    setIsLoading(false);
+  }, []);
+
+  if (error) {
     return (
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          backgroundColor: theme.colors.bg,
-          alignItems: "center",
-          gap: 5,
-          paddingHorizontal: 20,
-          paddingBottom: 10,
-        }}
-      >
-        <GoBackBtn action={action} />
-        <TextInput
-          style={{
-            backgroundColor: theme.colors.input,
-            borderRadius: 10,
-            width: "90%",
-            padding: 10,
-          }}
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
+      <Background>
+        <Text>{error}</Text>
+        <Button
+          title="Try again"
+          onPress={fetchCompanies}
+          color={theme.colors.primary}
         />
-      </View>
+      </Background>
     );
-  };
+  }
 
   return (
-    <ScrollView stickyHeaderIndices={[0]}>
-      <StickyHeader />
+    <ScrollView
+      style={{ backgroundColor: theme.colors.bg }}
+      stickyHeaderIndices={[0]}
+    >
+      <StickyHeader
+        handleSearch={handleSearch}
+        action={action}
+        searchTerm={searchTerm}
+      />
       <View
         style={{
           flexDirection: "row",
@@ -86,8 +117,13 @@ const Search = ({ action, header }) => {
           ({filteredData.length})
         </Text>
       </View>
-
-      <Companies companies={filteredData} />
+      {isLoading ? (
+        <Background>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+        </Background>
+      ) : (
+        <Companies companies={filteredData} />
+      )}
     </ScrollView>
   );
 };

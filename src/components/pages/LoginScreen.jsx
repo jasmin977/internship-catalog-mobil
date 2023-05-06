@@ -20,6 +20,7 @@ const LoginScreen = ({ navigation }) => {
     error: "",
   });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const [loading, setLoading] = useState(false);
 
   const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
@@ -29,27 +30,21 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    const userJson = {
-      id: 1,
-      first_name: "yasmin",
-      last_name: "ban abdeljelil",
-      email: "bayasmin@gmail.com",
-      registration_completed: true,
-    };
-    saveUserCredential("token", userJson);
-    /*  const [{ data, headers }, err] = await authApi.login(
+
+    setLoading(true);
+    const [{ data, headers }, err] = await authApi.login(
       email.value,
       password.value
     );
-    
+    setLoading(false);
     if (err) return console.log(err);
     if (data.success) {
       saveUserCredential(headers.token, data.user);
     } else {
       data.error.includes("email")
-      ? setEmail({ ...email, error: data.error })
-      : setPassword({ ...password, error: data.error });
-    } */
+        ? setEmail({ ...email, error: data.error })
+        : setPassword({ ...password, error: data.error });
+    }
   };
   return (
     <Background>
@@ -85,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <AppButton title="login" onPress={onLoginPressed} />
+      <AppButton loading={loading} title="login" onPress={onLoginPressed} />
       <SignUpInSwitch
         quest="Don't have an account"
         sol="Sign Up"

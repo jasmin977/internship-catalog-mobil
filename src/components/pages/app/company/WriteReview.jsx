@@ -7,42 +7,16 @@ import {
   UserReviewHeader,
   WriteReviewInput,
 } from "../../../atoms/company";
-import { AppButton, Background, GoBackBtn } from "../../../atoms";
-import { ScrollView } from "react-native-gesture-handler";
-const StickyHeader = ({ name }) => {
-  return (
-    <View
-      style={{
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-between",
+import { AppButton } from "../../../atoms";
+import { useContext } from "react";
+import { AuthContext } from "../../../../context";
 
-        backgroundColor: theme.colors.bg,
-        alignItems: "center",
-        gap: 5,
-        paddingHorizontal: 20,
-        paddingBottom: 20,
-      }}
-    >
-      <GoBackBtn />
-      <Text
-        style={{
-          fontSize: 20,
-          fontFamily: "importantText",
-          color: theme.colors.text,
-        }}
-      >
-        {name}
-      </Text>
-      <Text></Text>
-    </View>
-  );
-};
 const WriteReview = ({ rating, setRating }) => {
+  const { userInfo } = useContext(AuthContext);
   const review = {
     postedByPhot:
       "https://cdn3d.iconscout.com/3d/premium/thumb/user-profile-2871145-2384395.png",
-    postedByName: "yasmine",
+    postedByName: userInfo.first_name,
     rate: rating,
   };
 
@@ -73,7 +47,7 @@ const WriteReview = ({ rating, setRating }) => {
       </View>
       <AppButton
         onPress={() => console.log("publish review")}
-        additionalstyle
+        additionalstyle={{ width: "100%" }}
         title={"publish review"}
         iconName={"chatbox-outline"}
       ></AppButton>

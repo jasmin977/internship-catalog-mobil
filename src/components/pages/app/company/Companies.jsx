@@ -7,7 +7,7 @@ import { Background } from "../../../atoms";
 import { CompanyCard } from "../../../molecules/company";
 import { theme } from "../../../../config";
 
-const Companies = ({ companies }) => {
+const Companies = () => {
   return (
     <View
       style={{
@@ -16,7 +16,7 @@ const Companies = ({ companies }) => {
         gap: 10,
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 100,
+        marginBottom: 10,
       }}
     >
       {companies.map((company, idx) => (

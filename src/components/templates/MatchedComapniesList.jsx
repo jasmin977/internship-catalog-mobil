@@ -12,7 +12,7 @@ const MatchedComapniesList = () => {
   const [companies, setcompanies] = useState([]);
 
   const fetchCompanies = async () => {
-    const [res, err] = await companiesApi.getCompanyPage(1);
+    const [res, err] = await companiesApi.getCompanyPage(2);
     if (err) return console.log(err);
     const { data, status } = res;
     if (status === 200) {
@@ -24,8 +24,8 @@ const MatchedComapniesList = () => {
   };
 
   useEffect(() => {
-    //fetchCompanies();
-    setcompanies(staticcompanies);
+    fetchCompanies();
+    //setcompanies(staticcompanies);
   }, []);
 
   return (
@@ -48,7 +48,13 @@ const MatchedComapniesList = () => {
         >
           matched companies
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("companies")}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("companies", {
+              screen: "CompaniesSearchScreen",
+            })
+          }
+        >
           <Text
             style={{
               fontFamily: "subTitle",
@@ -85,6 +91,47 @@ const MatchedComapniesList = () => {
           })}
         </View>
       </ScrollView>
+
+      <View
+        style={{
+          width: "100%",
+          paddingHorizontal: 20,
+          paddingTop: 20,
+          marginBottom: -20,
+          justifyContent: "space-between",
+          flexDirection: "row",
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "title",
+            fontSize: 15,
+            textTransform: "capitalize",
+            color: theme.colors.text,
+          }}
+        >
+          Companies that you may like
+        </Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("companies", {
+              screen: "CompaniesSearchScreen",
+            })
+          }
+        >
+          <Text
+            style={{
+              fontFamily: "subTitle",
+              fontSize: 15,
+              color: theme.colors.subtext,
+
+              textTransform: "capitalize",
+            }}
+          >
+            see all
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

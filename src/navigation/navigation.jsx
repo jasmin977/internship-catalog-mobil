@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -159,6 +162,8 @@ export const MyTabs = () => {
             headerStyle: {
               height: 150,
             },
+            gestureEnabled: true,
+            ...TransitionPresets.ModalPresentationIOS,
 
             headerTitle: () => <FeedHeader />,
             tabBarIcon: ({ focused, size, color }) => (
@@ -183,36 +188,12 @@ export const MyTabs = () => {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingScreen}
-        options={{
-          tabBarIcon: ({ focused, size, color }) => (
-            <View
-              style={{
-                backgroundColor: focused
-                  ? "rgba(255, 255, 255, 0.3)"
-                  : "transparent",
-                padding: 10,
-                borderRadius: 10,
-              }}
-            >
-              <Ionicons
-                focused={focused}
-                color={color}
-                size={size}
-                name={focused ? "settings" : "settings-outline"}
-              />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
         name="companies"
         component={CompaniesStackScreens}
-        //   name="calendar"
-        // component={CalendarScreen}
         options={{
           tabBarStyle: { display: "none" },
+          gestureEnabled: true,
+          ...TransitionPresets.ModalPresentationIOS,
           tabBarIcon: ({ focused, size, color }) => (
             <View
               style={{
@@ -227,17 +208,20 @@ export const MyTabs = () => {
                 focused={focused}
                 color={color}
                 size={size}
-                name={focused ? "calendar" : "calendar-outline"}
+                name={focused ? "search" : "search-outline"}
               />
             </View>
           ),
         }}
       />
+
       <Tab.Screen
         name="intershipPorcess"
         component={IntershipProcessStackScreens}
         options={{
           tabBarStyle: { display: "none" },
+          gestureEnabled: true,
+          ...TransitionPresets.ModalPresentationIOS,
           tabBarIcon: ({ focused, size, color }) => (
             <View
               style={{
@@ -286,15 +270,15 @@ export const MyTabs = () => {
   );
 };
 
-function CompaniesStackScreens({}) {
+function CompaniesStackScreens() {
   return (
     <Stack.Navigator
-      initialRouteName="CompaniesScreen"
+      initialRouteName="CompaniesSearchScreen"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="CompaniesScreen" component={CompaniesScreen} />
+      <Stack.Screen name="CompaniesSearchScreen" component={SearchScreen} />
       <Stack.Screen
         name="companyDetailScreen"
         component={companyDetailScreen}
@@ -350,7 +334,7 @@ function ProfileStackScreens() {
 function HomeStackScreens() {
   return (
     <Stack.Navigator
-      initialRouteName="Feed"
+      initialRouteName="FeedScreen"
       screenOptions={{
         headerShown: false,
       }}

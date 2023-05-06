@@ -3,10 +3,10 @@ import React from "react";
 import { theme } from "../../../config";
 import { CompanyInfoItem } from "../../atoms/company";
 
-const Overview = ({ overview }) => {
+const Overview = ({ company }) => {
   return (
     <View>
-      <View style={{ gap: 12, paddingVertical: 20 }}>
+      <View style={{ gap: 10, paddingVertical: 20, alignItems: "flex-start" }}>
         <Text
           style={{
             fontSize: 25,
@@ -23,36 +23,56 @@ const Overview = ({ overview }) => {
             gap: 8,
           }}
         >
-          <CompanyInfoItem iconName="call-outline" text={`Phone: 51241715`} />
+          {company.company_phone && (
+            <CompanyInfoItem
+              iconName="call-outline"
+              text={`${company.company_phone}`}
+            />
+          )}
 
-          <CompanyInfoItem iconName="mail-outline" text={`Email: 51241715`} />
-          <CompanyInfoItem
-            iconName="globe-outline"
-            text={`Website: 51241715`}
-          />
+          {company.company_phone && (
+            <CompanyInfoItem
+              iconName="mail-outline"
+              text={`${company.company_name}@gmail.com`}
+            />
+          )}
+          {company.company_website && (
+            <CompanyInfoItem
+              iconName="globe-outline"
+              text={` ${company.company_website}`}
+            />
+          )}
+          {company.company_linkedin_url && (
+            <CompanyInfoItem
+              iconName="logo-linkedin"
+              text={` ${company.company_linkedin_url}`}
+            />
+          )}
         </View>
       </View>
 
-      <View style={{ gap: 12 }}>
-        <Text
-          style={{
-            fontSize: 25,
-            color: theme.colors.text,
-            fontFamily: "title",
-          }}
-        >
-          Overview
-        </Text>
-        <Text
-          style={{
-            fontSize: 15,
-            fontFamily: "text",
-            color: theme.colors.subtext,
-          }}
-        >
-          {overview}
-        </Text>
-      </View>
+      {company.overview && (
+        <View style={{ gap: 10, justifyContent: "flex-start" }}>
+          <Text
+            style={{
+              fontSize: 25,
+              color: theme.colors.text,
+              fontFamily: "title",
+            }}
+          >
+            Overview
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontFamily: "text",
+              color: theme.colors.subtext,
+            }}
+          >
+            {company.overview}
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

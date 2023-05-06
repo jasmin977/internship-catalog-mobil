@@ -141,7 +141,7 @@ const Profile = ({ personData }) => {
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
-        paddingTop: StatusBar.currentHeight + 20,
+        paddingTop: StatusBar.currentHeight,
         backgroundColor: theme.colors.bg,
       }}
     >
@@ -268,14 +268,11 @@ const Profile = ({ personData }) => {
                 gap: 8,
               }}
             >
-              <CompanyInfoItem
-                iconName="call-outline"
-                text={`Phone: 51241715`}
-              />
+              <CompanyInfoItem iconName="call-outline" text={`51241715`} />
 
               <CompanyInfoItem
                 iconName="mail-outline"
-                text={`Email: yasmin@issatso-sousse.tn`}
+                text={`yasmin@issatso-sousse.tn`}
               />
             </View>
           </View>

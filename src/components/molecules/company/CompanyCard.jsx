@@ -93,30 +93,32 @@ const CompanyCard = ({ company, taille }) => {
           </Text>
 
           {/**location */}
-          <View
-            style={{
-              flexDirection: "row",
-              gap: 2,
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <Ionicons
-              color={theme.colors.subtext}
-              size={15}
-              name="location-outline"
-            />
-            <Text
+          {company.company_city && (
+            <View
               style={{
-                color: theme.colors.subtext,
-                fontFamily: "text",
-
-                textTransform: "capitalize",
+                flexDirection: "row",
+                gap: 2,
+                justifyContent: "center",
+                alignItems: "flex-start",
               }}
             >
-              {company.company_city}
-            </Text>
-          </View>
+              <Ionicons
+                color={theme.colors.subtext}
+                size={15}
+                name="location-outline"
+              />
+              <Text
+                style={{
+                  color: theme.colors.subtext,
+                  fontFamily: "text",
+
+                  textTransform: "capitalize",
+                }}
+              >
+                {company.company_city}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>

@@ -5,7 +5,9 @@ import { Text } from "react-native";
 import { AppButton, MyInputText, Picker } from "../../atoms";
 import { useForm } from "../../../hooks";
 import { ProcessFormContext } from "../../../context";
-
+import { Specialities } from "../../../data/Specialities";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 const FormInput = ({ formData, errors, handleChange, handleBlur }) => {
   return (
     <View
@@ -68,59 +70,82 @@ const FormInput = ({ formData, errors, handleChange, handleBlur }) => {
         hint="51241715"
         keyboardType="phone-pad"
       />
+
       <Picker
-        value={formData.major}
-        handlePickerChange={handleChange}
+        values={Specialities}
+        selectedIdx={formData.major}
+        action={(itemValue, itemIndex) => {
+          handleChange("major", itemIndex);
+        }}
         label={"major"}
       />
     </View>
   );
 };
-const PersonalDetailStep = ({ action, title }) => {
-  const { updateprocessForm, goToNextStep } = useContext(ProcessFormContext);
+const PersonalDetailStep = ({ savedEdit, title, required }) => {
+  const navigation = useNavigation();
+
+  const { updateprocessForm, goToNextStep, processForm } =
+    useContext(ProcessFormContext);
   const screenWidth = Dimensions.get("window").width;
   const [loading, setLoading] = useState(false);
-  const initialState = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    cin: "",
-    phone: "",
-    major: 1,
-  };
+
+  let step_1_state = {};
+  if (processForm["step1"] === "") {
+    step_1_state = {
+      firstname: "",
+      lastname: "",
+      email: "",
+      cin: "",
+      phone: "",
+      major: 1,
+    };
+  } else {
+    step_1_state = {
+      firstname: processForm["step1"].firstname,
+      lastname: processForm["step1"].lastname,
+      email: processForm["step1"].email,
+      cin: processForm["step1"].cin,
+      phone: processForm["step1"].phone,
+      major: processForm["step1"].major,
+    };
+  }
 
   const validateForm = (values) => {
     let errors = {};
+    if (required) {
+      if (!values.firstname) {
+        errors.firstname = "Lirstname is required";
+      } else {
+        errors.firstname = null;
+      }
+      if (!values.lastname) {
+        errors.lastname = "Lastname is required";
+      } else {
+        errors.lastname = null;
+      }
 
-    if (!values.firstname) {
-      errors.firstname = "Lirstname is required";
-    } else {
-      errors.firstname = null;
-    }
-    if (!values.lastname) {
-      errors.lastname = "Lastname is required";
-    } else {
-      errors.lastname = null;
-    }
+      if (!values.email) {
+        errors.email = "Email is required";
+      } else {
+        errors.email = null;
+      }
 
-    if (!values.email) {
-      errors.email = "Email is required";
-    } else {
-      errors.email = null;
-    }
-
-    if (!values.cin) {
-      errors.cin = "CIN is required";
-    } else {
-      errors.cin = null;
-    }
-    if (!values.phone) {
-      errors.phone = "Phone Number is required";
-    } else {
-      errors.phone = null;
-    }
-    if (!values.major) {
-      errors.major = "Major is required";
+      if (!values.cin) {
+        errors.cin = "CIN is required";
+      } else {
+        errors.cin = null;
+      }
+      if (!values.phone) {
+        errors.phone = "Phone Number is required";
+      } else {
+        errors.phone = null;
+      }
+      if (!values.major) {
+        errors.major = "Major is required";
+      } else {
+        errors.major = null;
+      }
     }
 
     return errors;
@@ -132,28 +157,34 @@ const PersonalDetailStep = ({ action, title }) => {
     handleBlur,
     handleSubmit,
     isSubmitted,
-  } = useForm(initialState, validateForm);
+  } = useForm(step_1_state, validateForm);
 
   const submitStep1 = () => {
-    setLoading(true);
-    handleSubmit();
-    //store it in local storage and move on to next page
-    if (isSubmitted) {
-      updateprocessForm(formData);
-      goToNextStep();
+    if (required) {
+      handleSubmit();
+      if (isSubmitted) {
+        updateprocessForm({ step1: formData });
+        goToNextStep();
+      }
+    } else {
+      updateprocessForm({ step1: formData });
+      navigation.goBack();
     }
-    setLoading(false);
   };
+
+  useEffect(() => {
+    if (savedEdit) {
+      submitStep1();
+    }
+  }, [savedEdit]);
 
   return (
     <View
       style={{
         flex: 1,
         width: screenWidth,
-        paddingVertical: 40,
-        borderTopEndRadius: 30,
-        marginTop: 30,
-        borderTopStartRadius: 30,
+
+        paddingTop: 30,
         backgroundColor: theme.colors.bg,
       }}
     >
@@ -181,11 +212,13 @@ const PersonalDetailStep = ({ action, title }) => {
           handleBlur={handleBlur}
         />
 
-        <AppButton
-          loading={loading}
-          onPress={submitStep1}
-          title={title ? title : "save and continue"}
-        />
+        {required && (
+          <AppButton
+            loading={loading}
+            onPress={submitStep1}
+            title={title ? title : "save and continue"}
+          />
+        )}
       </View>
     </View>
   );
