@@ -11,6 +11,7 @@ import { Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FeedHeader } from "../molecules";
 import MatchedComapniesList from "./MatchedComapniesList";
+import { useRequest } from "../../hooks";
 
 const getCloser = (value, checkOne, checkTwo) =>
   Math.abs(value - checkOne) < Math.abs(value - checkTwo) ? checkOne : checkTwo;
@@ -46,10 +47,10 @@ const Header = () => {
 };
 
 const ScrollableCompaniesScreen = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
+  const { isLoading, data, error, refresh } = useRequest(
+    companiesApi.getCompanyPage(1)
+  );
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [error, setError] = useState("");
   {
     /*-----------------------------------ANIMATION--------------------------------------- */
   }
@@ -101,36 +102,6 @@ const ScrollableCompaniesScreen = () => {
       }
     }
   };
-  {
-    /*-------------------------------------------------------------------------- */
-  }
-  const [companies, setcompanies] = useState([]);
-
-  const fetchCompanies = async () => {
-    setIsRefreshing(true);
-    const [res, err] = await companiesApi.getCompanyPage(1);
-    if (err) return console.log(err);
-    const { data, status } = res;
-    if (status !== 200) {
-      setError(data.message);
-    } else {
-      setcompanies(data.companies);
-      setIsRefreshing(false);
-      return;
-    }
-
-    // TODO: handle errors or empty response
-    console.log("handle failed response");
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchCompanies().then(() => {
-      setIsLoading(false);
-    });
-
-    //setcompanies(staticcompanies);
-  }, []);
 
   if (error) {
     return (
@@ -138,7 +109,7 @@ const ScrollableCompaniesScreen = () => {
         <Text>{error}</Text>
         <Button
           title="Try again"
-          onPress={fetchCompanies}
+          onPress={refresh}
           color={theme.colors.primary}
         />
       </Background>
@@ -152,43 +123,44 @@ const ScrollableCompaniesScreen = () => {
       </Background>
     );
   }
-
+  console.log(data.companies);
   return (
-    <View
-      style={{
-        flex: 1,
-        // paddingTop: StatusBar.currentHeight,
-        backgroundColor: theme.colors.bg,
-        paddingBotoom: 100,
-      }}
-    >
-      <StatusBar backgroundColor={theme.colors.bg} barStyle="dark-content" />
-      <Animated.View style={[styles.header, { transform: [{ translateY }] }]}>
-        <Header />
-      </Animated.View>
-
-      <Animated.FlatList
-        scrollEventThrottle={16}
-        contentContainerStyle={{
-          paddingTop: 130,
-          paddingBottom: 100,
-
-          gap: 10,
+    data && (
+      <View
+        style={{
+          flex: 1,
+          // paddingTop: StatusBar.currentHeight,
+          backgroundColor: theme.colors.bg,
+          paddingBotoom: 100,
         }}
-        onScroll={handleScroll}
-        onMomentumScrollEnd={handleSnap}
-        ref={refList}
-        ListHeaderComponent={<MatchedComapniesList />}
-        onRefresh={fetchCompanies}
-        refreshing={isRefreshing}
-        data={companies}
-        keyExtractor={(item, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        renderItem={(item, idx) => {
-          return <CompanyCardOverview taille={320} company={item.item} />;
-        }}
-      />
-    </View>
+      >
+        <StatusBar backgroundColor={theme.colors.bg} barStyle="dark-content" />
+        <Animated.View style={[styles.header, { transform: [{ translateY }] }]}>
+          <Header />
+        </Animated.View>
+
+        <Animated.FlatList
+          scrollEventThrottle={16}
+          contentContainerStyle={{
+            paddingTop: 130,
+            paddingBottom: 100,
+            gap: 10,
+          }}
+          onScroll={handleScroll}
+          onMomentumScrollEnd={handleSnap}
+          ref={refList}
+          ListHeaderComponent={<MatchedComapniesList />}
+          onRefresh={refresh}
+          refreshing={isRefreshing}
+          data={data.companies}
+          keyExtractor={(item, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          renderItem={(item, idx) => {
+            return <CompanyCardOverview taille={320} company={item.item} />;
+          }}
+        />
+      </View>
+    )
   );
 };
 const styles = StyleSheet.create({

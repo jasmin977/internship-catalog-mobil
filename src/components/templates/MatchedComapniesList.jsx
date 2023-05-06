@@ -6,27 +6,14 @@ import { theme } from "../../config";
 import { CompanyCard, CompanyCardOverview } from "../molecules/company";
 import { companiesApi } from "../../api";
 import staticcompanies from "../../data/output_2023-03-05_020409.json";
+import { useRequest } from "../../hooks";
 
 const MatchedComapniesList = () => {
+  const { isLoading, data, error, refresh } = useRequest(
+    companiesApi.getCompanyPage(2)
+  );
   const navigation = useNavigation();
   const [companies, setcompanies] = useState([]);
-
-  const fetchCompanies = async () => {
-    const [res, err] = await companiesApi.getCompanyPage(2);
-    if (err) return console.log(err);
-    const { data, status } = res;
-    if (status === 200) {
-      setcompanies(data.companies);
-      return;
-    }
-    // TODO: handle errors or empty response
-    console.log("handle failed response");
-  };
-
-  useEffect(() => {
-    fetchCompanies();
-    //setcompanies(staticcompanies);
-  }, []);
 
   return (
     <View style={{ width: "100%", marginVertical: 20 }}>
@@ -80,7 +67,7 @@ const MatchedComapniesList = () => {
             gap: 5,
           }}
         >
-          {companies.map((company, idx) => {
+          {data.companies.map((company, idx) => {
             return (
               <CompanyCardOverview
                 key={`match_company_${idx}`}
