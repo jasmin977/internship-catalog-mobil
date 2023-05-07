@@ -5,7 +5,7 @@ import companiesList from "../../data/output_2023-03-05_020409.json";
 import { CompanyCard, CompanyCardOverview } from "../molecules/company";
 import { theme } from "../../config";
 import { companiesApi } from "../../api";
-import { Background, InputWithIcons } from "../atoms";
+import { AppButton, Background, InputWithIcons } from "../atoms";
 import { ActivityIndicator } from "react-native";
 import { Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -109,10 +109,33 @@ const ScrollableCompaniesScreen = () => {
   if (error) {
     return (
       <Background>
-        <Text>{error}</Text>
-        <Button
+        <Text
+          style={{
+            fontSize: 22,
+            textTransform: "capitalize",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          Oops,
+        </Text>
+        <Text
+          style={{
+            maxWidth: 300,
+            fontSize: 16,
+            marginBottom: 20,
+            textTransform: "capitalize",
+            // fontFamily: "",
+            color: theme.colors.subtext,
+            textAlign: "center",
+          }}
+        >
+          it seems that our app took a coffee break ☕️, please try again later.
+        </Text>
+        <AppButton
           title="Try again"
-          onPress={refresh}
+          // onPress={refresh}
+          additionalstyle={{ width: 150, paddingVertical: 15 }}
           color={theme.colors.primary}
         />
       </Background>

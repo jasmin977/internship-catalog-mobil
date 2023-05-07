@@ -19,6 +19,7 @@ import WriteReview from "./WriteReview";
 import useRequest from "../../../../hooks/useRequest";
 import useRequestDispatcher from "../../../../hooks/useRequestDispatcher";
 import { companiesApi } from "../../../../api";
+import { useFocusEffect } from "@react-navigation/core";
 const defaultCompanyImage =
   "https://icon-library.com/images/companies-icon/companies-icon-4.jpg";
 
@@ -59,17 +60,17 @@ const CompanyDetail = ({ route }) => {
     company = route.params.company;
   }
   const { setOption, data, isLoading } = useRequest(
-    companiesApi.getCompanybyId(company.id)
+    companiesApi.getCompanybyId(route.params.company.id)
   );
   const {
     setOption: setReviewOption,
     data: companyReviews,
     isLoading: isLoadingReview,
-  } = useRequest(companiesApi.getCompanyReviews(company.id));
+  } = useRequest(companiesApi.getCompanyReviews(route.params.company.id));
   const { send: likeCompany, setOption: setLikeCompanyRequestOption } =
-    useRequest(companiesApi.likeCompany(company.id), false);
+    useRequest(companiesApi.likeCompany(route.params.company.id), false);
   const { send: saveCompany, setOption: setSaveCompanyRequestOption } =
-    useRequest(companiesApi.saveCompany(company.id), false);
+    useRequest(companiesApi.saveCompany(route.params.company.id), false);
   const { send: submitReview } = useRequest(
     companiesApi.reviewCompany(),
     false
@@ -91,14 +92,24 @@ const CompanyDetail = ({ route }) => {
   };
   const handleSubmitCompanyReview = () => {
     console.log("sbmiting review");
-    submitReview({ rating, content: review, companyId: company.id });
+    submitReview({
+      rating,
+      content: review,
+      companyId: route.params.company.id,
+    });
     toggleBottomViewVisibility();
   };
 
   useEffect(() => {
-    setOption(companiesApi.getCompanybyId(company.id));
-    setLikeCompanyRequestOption(companiesApi.likeCompany(company.id));
-    setSaveCompanyRequestOption(companiesApi.saveCompany(company.id));
+    setCurrentView("Description");
+    setOption(companiesApi.getCompanybyId(route.params.company.id));
+    setReviewOption(companiesApi.getCompanyReviews(route.params.company.id));
+    setLikeCompanyRequestOption(
+      companiesApi.likeCompany(route.params.company.id)
+    );
+    setSaveCompanyRequestOption(
+      companiesApi.saveCompany(route.params.company.id)
+    );
   }, [route.params.company]);
 
   /** animation swipe */
@@ -180,6 +191,7 @@ const CompanyDetail = ({ route }) => {
               {currentView === "Review"
                 ? companyReviews && (
                     <CompanyReviewCard
+                      // key={`${company.company_name}_review_card`}
                       nbReview={companyReviews.nbReview}
                       avgRating={companyReviews.avgRating}
                     />

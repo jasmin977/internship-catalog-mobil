@@ -4,7 +4,7 @@ import { theme } from "../../../config";
 import { Text } from "react-native";
 import { AppButton, MyInputText, Picker } from "../../atoms";
 import { useForm } from "../../../hooks";
-import { ProcessFormContext } from "../../../context";
+import { AuthContext, ProcessFormContext } from "../../../context";
 import { Specialities } from "../../../data/Specialities";
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -87,15 +87,17 @@ const PersonalDetailStep = ({ savedEdit, title, required }) => {
 
   const { updateprocessForm, goToNextStep, processForm } =
     useContext(ProcessFormContext);
+  const { userInfo } = useContext(AuthContext);
+  console.log(userInfo);
   const screenWidth = Dimensions.get("window").width;
   const [loading, setLoading] = useState(false);
 
   let step_1_state = {};
   if (!processForm) {
     step_1_state = {
-      firstname: "",
-      lastname: "",
-      email: "",
+      firstname: userInfo.first_name,
+      lastname: userInfo.last_name,
+      email: userInfo.email,
       cin: "",
       phone: "",
       major: 1,

@@ -275,6 +275,7 @@ function CompaniesStackScreens() {
       initialRouteName="CompaniesSearchScreen"
       screenOptions={{
         headerShown: false,
+        unmountInactiveRoutes: true,
       }}
     >
       <Stack.Screen name="CompaniesSearchScreen" component={SearchScreen} />

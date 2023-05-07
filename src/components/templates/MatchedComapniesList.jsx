@@ -9,7 +9,7 @@ import staticcompanies from "../../data/output_2023-03-05_020409.json";
 import { useRequest } from "../../hooks";
 
 const MatchedComapniesList = () => {
-  const { isLoading, data, error, refresh } = useRequest(
+  const { isLoading, data, error, send } = useRequest(
     companiesApi.getCompanyPage(2)
   );
   const navigation = useNavigation();
