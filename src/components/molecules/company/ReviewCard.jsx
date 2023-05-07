@@ -1,10 +1,9 @@
 import { View, Text, Dimensions } from "react-native";
 import React from "react";
-
 import { theme } from "../../../config";
 import { UserReviewHeader } from "../../atoms/company";
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review, idx }) => {
   return (
     <View
       style={{
@@ -18,14 +17,13 @@ const ReviewCard = ({ review }) => {
       <View
         style={{
           width: Dimensions.get("window").width - 20,
-
           padding: 5,
           justifyContent: "space-between",
           flexDirection: "row",
           alignItems: "flex-end",
         }}
       >
-        <UserReviewHeader review={review} />
+        <UserReviewHeader idx={idx} review={review} />
         <Text
           style={{
             fontFamily: "text",
@@ -33,13 +31,17 @@ const ReviewCard = ({ review }) => {
             color: theme.colors.subtext,
           }}
         >
-          {new Date().toLocaleDateString()}
+          {new Date(review.createdAt).toLocaleDateString()}
         </Text>
       </View>
       <Text
-        style={{ fontFamily: "text", fontSize: 13, color: theme.colors.text }}
+        style={{
+          fontFamily: "text",
+          fontSize: 13,
+          color: theme.colors.text,
+        }}
       >
-        {review.reviewDescription}.
+        {review.content}.
       </Text>
     </View>
   );

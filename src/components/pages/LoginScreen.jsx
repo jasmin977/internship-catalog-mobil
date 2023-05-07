@@ -37,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
       password.value
     );
     setLoading(false);
-    if (err) return console.log(err);
+    if (err) return console.log(err.message);
     if (data.success) {
       saveUserCredential(headers.token, data.user);
     } else {

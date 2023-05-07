@@ -5,8 +5,8 @@ import { CompanyInfoItem } from "../../atoms/company";
 
 const Overview = ({ company }) => {
   return (
-    <View>
-      <View style={{ gap: 10, paddingVertical: 20, alignItems: "flex-start" }}>
+    <View style={{ gap: 30 }}>
+      <View style={{ gap: 20 }}>
         <Text
           style={{
             fontSize: 25,
@@ -20,12 +20,13 @@ const Overview = ({ company }) => {
           style={{
             alignItems: "flex-start",
             justifyContent: "center",
-            gap: 8,
+            gap: 10,
           }}
         >
           {company.company_phone && (
             <CompanyInfoItem
               iconName="call-outline"
+              label="Phone"
               text={`${company.company_phone}`}
             />
           )}
@@ -33,18 +34,22 @@ const Overview = ({ company }) => {
           {company.company_phone && (
             <CompanyInfoItem
               iconName="mail-outline"
+              label="Email"
               text={`${company.company_name}@gmail.com`}
             />
           )}
           {company.company_website && (
             <CompanyInfoItem
               iconName="globe-outline"
+              label="Website"
               text={` ${company.company_website}`}
             />
           )}
           {company.company_linkedin_url && (
             <CompanyInfoItem
               iconName="logo-linkedin"
+              label="Linkedin"
+              type="link"
               text={` ${company.company_linkedin_url}`}
             />
           )}

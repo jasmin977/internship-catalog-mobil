@@ -3,7 +3,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../../config";
 
-const UserReviewHeader = ({ review }) => {
+const UserReviewHeader = ({ review, idx }) => {
   return (
     <View
       style={{
@@ -15,7 +15,7 @@ const UserReviewHeader = ({ review }) => {
     >
       <Image
         source={{
-          uri: review.postedByPhot,
+          uri: `http://192.168.1.13:8080/static/avatars/avatar_${idx + 1}.jpg`,
         }}
         style={{
           width: 40,
@@ -32,10 +32,10 @@ const UserReviewHeader = ({ review }) => {
             color: theme.colors.text,
           }}
         >
-          {review.postedByName}
+          {review.user.firstName} {review.user.lastName}
         </Text>
         <View style={{ flexDirection: "row", gap: 3 }}>
-          {Array.from({ length: review.rate }).map((item, idx) => {
+          {Array.from({ length: review.rating }).map((item, idx) => {
             return (
               <Ionicons
                 key={`rate_star_num_${idx}`}
@@ -52,7 +52,7 @@ const UserReviewHeader = ({ review }) => {
               color: theme.colors.text,
             }}
           >
-            {review.rate}.0
+            {review.rating}.0
           </Text>
         </View>
       </View>

@@ -140,7 +140,6 @@ export const MyTabs = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-
         tabBarStyle: {
           zIndex: 1,
           bottom: 10,

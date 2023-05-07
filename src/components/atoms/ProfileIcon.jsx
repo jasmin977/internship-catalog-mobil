@@ -11,9 +11,9 @@ const ProfileIcon = () => {
     >
       <Image
         source={{
-          uri: "https://cdn3d.iconscout.com/3d/premium/thumb/user-profile-2871145-2384395.png",
+          uri: "http://192.168.1.13:8080/static/avatars/avatar_12.jpg",
         }}
-        style={{ width: 50, height: 50, borderRadius: 50 / 2 }}
+        style={{ width: 60, height: 60, borderRadius: 50 / 2 }}
       />
     </TouchableOpacity>
   );

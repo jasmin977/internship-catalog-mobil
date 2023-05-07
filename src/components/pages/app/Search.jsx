@@ -1,7 +1,7 @@
 import { TextInput, View, ScrollView, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 
-import companiesList from "../../../data/output_2023-03-05_020409.json";
+// import companiesList from "../../../data/output_2023-03-05_020409.json";
 import { Background, GoBackBtn } from "../../atoms";
 
 import { theme } from "../../../config";
@@ -15,11 +15,14 @@ const StickyHeader = ({ action, searchTerm, handleSearch }) => {
       style={{
         width: "100%",
         flexDirection: "row",
+        justifyContent: "space-between",
         backgroundColor: theme.colors.bg,
         alignItems: "center",
-        gap: 5,
         paddingHorizontal: 20,
         paddingBottom: 10,
+        flexDirection: "row",
+        paddingTop: 20,
+        gap: 10,
       }}
     >
       <GoBackBtn action={action} />
@@ -27,7 +30,7 @@ const StickyHeader = ({ action, searchTerm, handleSearch }) => {
         style={{
           backgroundColor: theme.colors.input,
           borderRadius: 10,
-          width: "90%",
+          flex: 1,
           padding: 10,
         }}
         placeholder="Search..."
@@ -57,15 +60,12 @@ const Search = ({ action, header }) => {
 
   const handleSearch = (text) => {
     setSearchTerm(text);
-    filterData(text);
+    if (text.length > 1) filterData(text);
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    // handleSearch(searchTerm).then(() => {
-    setFilteredData(companiesList);
-    setIsLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setFilteredData(companiesList);
+  // }, []);
 
   if (error) {
     return (
@@ -81,50 +81,57 @@ const Search = ({ action, header }) => {
   }
 
   return (
-    <ScrollView
-      style={{ backgroundColor: theme.colors.bg }}
-      stickyHeaderIndices={[0]}
-    >
+    <>
       <StickyHeader
         handleSearch={handleSearch}
         action={action}
         searchTerm={searchTerm}
       />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-        }}
+      <ScrollView
+        style={{ backgroundColor: theme.colors.bg }}
+        stickyHeaderIndices={[0]}
       >
-        <Text
+        <View
           style={{
-            fontFamily: "importantText",
-            fontSize: 25,
-            margin: 10,
-            textTransform: "capitalize",
-            color: theme.colors.text,
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            backgroundColor: theme.colors.bg,
           }}
         >
-          {header}
-        </Text>
-        <Text
-          style={{
-            fontFamily: "importantText",
-            fontSize: 20,
-            color: theme.colors.text,
-          }}
-        >
-          ({filteredData.length})
-        </Text>
-      </View>
-      {isLoading ? (
-        <Background>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        </Background>
-      ) : (
-        <Companies companies={filteredData} />
-      )}
-    </ScrollView>
+          {header && (
+            <Text
+              style={{
+                fontFamily: "importantText",
+                fontSize: 25,
+                // margin: 10,
+                textTransform: "capitalize",
+                color: theme.colors.text,
+              }}
+            >
+              {header}
+            </Text>
+          )}
+          <Text
+            style={{
+              fontFamily: "importantText",
+              fontSize: 18,
+              color: theme.colors.text,
+            }}
+          >
+            Results ({filteredData.length})
+          </Text>
+        </View>
+        {isLoading ? (
+          <Background>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+          </Background>
+        ) : (
+          <Companies companies={filteredData} />
+        )}
+      </ScrollView>
+    </>
   );
 };
 

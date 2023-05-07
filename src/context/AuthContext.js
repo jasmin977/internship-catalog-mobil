@@ -5,9 +5,9 @@ export const AuthContext = createContext({
   isLoading: {},
   userToken: {},
   completedProfile: {},
-  userInfo: () => {},
-  saveUserCredential: () => {},
-  removeUserCredential: () => {},
+  userInfo: () => { },
+  saveUserCredential: () => { },
+  removeUserCredential: () => { },
 });
 
 export default AuthProvider = ({ children }) => {
@@ -34,12 +34,11 @@ export default AuthProvider = ({ children }) => {
     try {
       setisloading(true);
 
-      let isAuthenticated = await AsyncStorage.getItem("userToken");
+      let isAuthenticated = !!(await AsyncStorage.getItem("userToken"));
       console.log("isAuthenticated", isAuthenticated);
       if (isAuthenticated) {
         let userInfo = JSON.parse(await AsyncStorage.getItem("user"));
         let userToken = JSON.parse(await AsyncStorage.getItem("userToken"));
-        console.log(userInfo, userToken);
         setUserToken(userToken);
         setUserInfo(userInfo);
 
@@ -54,8 +53,8 @@ export default AuthProvider = ({ children }) => {
 
   const saveUserCredential = async (token, user) => {
     try {
+      console.log("saveUserCredential", token, user);
       setisloading(true);
-      console.log(token, user);
       setUserInfo(user);
       setUserToken(token);
       setIsAuthenticated(true);

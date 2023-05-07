@@ -67,15 +67,16 @@ const MatchedComapniesList = () => {
             gap: 5,
           }}
         >
-          {data.companies.map((company, idx) => {
-            return (
-              <CompanyCardOverview
-                key={`match_company_${idx}`}
-                taille={300}
-                company={company}
-              />
-            );
-          })}
+          {data &&
+            data.companies.map((company, idx) => {
+              return (
+                <CompanyCardOverview
+                  key={`match_company_${idx}`}
+                  taille={300}
+                  company={company}
+                />
+              );
+            })}
         </View>
       </ScrollView>
 

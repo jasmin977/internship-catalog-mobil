@@ -17,7 +17,7 @@ const getCloser = (value, checkOne, checkTwo) =>
   Math.abs(value - checkOne) < Math.abs(value - checkTwo) ? checkOne : checkTwo;
 
 const { diffClamp } = Animated;
-const headerHeight = 100 * 2;
+const headerHeight = 140 * 2;
 
 const Header = () => {
   const navigation = useNavigation();
@@ -27,15 +27,15 @@ const Header = () => {
       style={[
         {
           backgroundColor: theme.colors.bg,
-          paddingTop: 8,
+          paddingTop: 40,
         },
         {
+          elevation: 5,
           height: headerHeight / 1.4,
         },
       ]}
     >
       <FeedHeader />
-
       <InputWithIcons
         action={() =>
           navigation.navigate("companies", { screen: "CompaniesSearchScreen" })
@@ -123,13 +123,12 @@ const ScrollableCompaniesScreen = () => {
       </Background>
     );
   }
-  console.log(data.companies);
   return (
     data && (
       <View
         style={{
           flex: 1,
-          // paddingTop: StatusBar.currentHeight,
+          paddingTop: StatusBar.currentHeight,
           backgroundColor: theme.colors.bg,
           paddingBotoom: 100,
         }}
@@ -142,7 +141,7 @@ const ScrollableCompaniesScreen = () => {
         <Animated.FlatList
           scrollEventThrottle={16}
           contentContainerStyle={{
-            paddingTop: 130,
+            paddingTop: 170,
             paddingBottom: 100,
             gap: 10,
           }}

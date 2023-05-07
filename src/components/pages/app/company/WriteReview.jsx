@@ -10,10 +10,17 @@ import {
 import { AppButton } from "../../../atoms";
 import { useContext } from "react";
 import { AuthContext } from "../../../../context";
+import { StyleSheet } from "react-native";
 
-const WriteReview = ({ rating, setRating }) => {
+const WriteReview = ({
+  handleSubmit,
+  rating,
+  setRating,
+  review,
+  setReview,
+}) => {
   const { userInfo } = useContext(AuthContext);
-  const review = {
+  const reviewInfo = {
     postedByPhot:
       "https://cdn3d.iconscout.com/3d/premium/thumb/user-profile-2871145-2384395.png",
     postedByName: userInfo.first_name,
@@ -22,31 +29,15 @@ const WriteReview = ({ rating, setRating }) => {
 
   return (
     <View style={{ paddingHorizontal: 5 }}>
-      <Text
-        style={{
-          fontFamily: "title",
-          fontSize: 22,
-          color: theme.colors.text,
-        }}
-      >
-        Rate this company
-      </Text>
-      <Text
-        style={{
-          fontFamily: "text",
-          fontSize: 13,
-          color: theme.colors.text,
-        }}
-      >
-        Tell others what you think
-      </Text>
+      <Text style={headerStyle}>Rate this company</Text>
+      <Text style={hintStyle}>Tell others what you think</Text>
       <RateOption rating={rating} setRating={setRating} />
       <View style={{ gap: 5, alignItems: "flex-start" }}>
-        <UserReviewHeader review={review} />
-        <WriteReviewInput />
+        <UserReviewHeader review={reviewInfo} />
+        <WriteReviewInput value={review} setValue={setReview} />
       </View>
       <AppButton
-        onPress={() => console.log("publish review")}
+        onPress={handleSubmit}
         additionalstyle={{ width: "100%" }}
         title={"publish review"}
         iconName={"chatbox-outline"}
@@ -54,5 +45,16 @@ const WriteReview = ({ rating, setRating }) => {
     </View>
   );
 };
+
+const headerStyle = StyleSheet.create({
+  fontFamily: "title",
+  fontSize: 22,
+  color: theme.colors.text,
+});
+const hintStyle = StyleSheet.create({
+  fontFamily: "text",
+  fontSize: 13,
+  color: theme.colors.text,
+});
 
 export default WriteReview;

@@ -12,11 +12,10 @@ const Background = ({ children }) => {
 
 const styles = StyleSheet.create({
   background: {
-    height: "100%",
-
+    flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
-    paddingTop: StatusBar.currentHeight,
+    justifyContent: "center",
+    // paddingTop: StatusBar.currentHeight,
     backgroundColor: theme.colors.bg,
   },
   container: {

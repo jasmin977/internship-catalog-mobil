@@ -3,21 +3,25 @@ import { apiRequestHandler } from "../api";
 import { useContext } from "react";
 import { AuthContext } from "../context";
 
-const useRequest = (option) => {
+const useRequest = (initOption, sendOnLoad = true) => {
   const { removeUserCredential, userToken } = useContext(AuthContext);
   const [data, setData] = useState(null);
   const [headers, setheaders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [option, setOption] = useState(initOption)
 
-  const fetchData = async () => {
-    console.log("fetch");
+
+  const fetchData = async (data) => {
+    setIsLoading(true);
+
+    console.log("useRequest: ", option.url);
     if (userToken)
       option.headers = {
         ...option.headers,
         Authorization: `barear ${userToken}`,
       };
-    const [res, error] = await apiRequestHandler(option);
+    const [res, error] = await apiRequestHandler({ ...option, data });
     if (error) {
       setError(error.message);
       console.log(error.message);
@@ -33,12 +37,12 @@ const useRequest = (option) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (sendOnLoad) fetchData();
+  }, [option]);
 
-  const refresh = () => fetchData();
+  const send = (data) => fetchData(data);
 
-  return { data, isLoading, headers, error, refresh };
+  return { data, isLoading, headers, error, send, setOption };
 };
 
 export default useRequest;

@@ -6,22 +6,22 @@ const useForm = (initialState, validateForm) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (isSubmitting) {
-      const formIsValid = Object.values(errors).every(
-        (value) => value === null
-      );
+  // useEffect(() => {
+  //   if (isSubmitting) {
+  //     const formIsValid = Object.values(errors).every(
+  //       (value) => value === null
+  //     );
 
-      console.log("formIsValid", formIsValid);
-      console.log("formData", formData);
-      console.log("errors", errors);
-      if (formIsValid) {
-        console.log("Form submitted successfully!", formData);
-        setIsSubmitted(true);
-      }
-      setIsSubmitting(false);
-    }
-  }, [errors, formData, isSubmitting]);
+  //     console.log("formIsValid", formIsValid);
+  //     console.log("formData", formData);
+  //     console.log("errors", errors);
+  //     if (formIsValid) {
+  //       console.log("Form submitted successfully!", formData);
+  //       setIsSubmitted(true);
+  //     }
+  //     setIsSubmitting(false);
+  //   }
+  // }, [errors, formData, isSubmitting]);
 
   const handleChange = (name, value) => {
     setFormData({ ...formData, [name]: value });

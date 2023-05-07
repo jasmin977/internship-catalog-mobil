@@ -5,45 +5,45 @@ import { RateOption } from "../../atoms/company";
 import { ReviewCard } from "../../molecules/company";
 import { theme } from "../../../config";
 
-const reviews = [
-  {
-    postedByPhot:
-      "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
-    postedByName: "Amira bouhlel",
-    rate: 4,
-    postedAt: "2020-01-01 10:10:10",
-    reviewDescription:
-      "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
-  },
-  {
-    postedByPhot:
-      "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
-    postedByName: "Amira bouhlel",
-    rate: 4,
-    postedAt: "2020-01-01 10:10:10",
-    reviewDescription:
-      "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
-  },
-  {
-    postedByPhot:
-      "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
-    postedByName: "Amira bouhlel",
-    rate: 4,
-    postedAt: "2020-01-01 10:10:10",
-    reviewDescription:
-      "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
-  },
-  {
-    postedByPhot:
-      "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
-    postedByName: "Amira bouhlel",
-    rate: 4,
-    postedAt: "2020-01-01 10:10:10",
-    reviewDescription:
-      "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
-  },
-];
-const Review = ({ rating, setRating }) => {
+// const reviews = [
+//   {
+//     postedByPhot:
+//       "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
+//     postedByName: "Amira bouhlel",
+//     rate: 4,
+//     postedAt: "2020-01-01 10:10:10",
+//     reviewDescription:
+//       "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
+//   },
+//   {
+//     postedByPhot:
+//       "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
+//     postedByName: "Amira bouhlel",
+//     rate: 4,
+//     postedAt: "2020-01-01 10:10:10",
+//     reviewDescription:
+//       "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
+//   },
+//   {
+//     postedByPhot:
+//       "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
+//     postedByName: "Amira bouhlel",
+//     rate: 4,
+//     postedAt: "2020-01-01 10:10:10",
+//     reviewDescription:
+//       "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
+//   },
+//   {
+//     postedByPhot:
+//       "https://orlandosolution.com/wp-content/uploads/2020/03/originaal.jpg",
+//     postedByName: "Amira bouhlel",
+//     rate: 4,
+//     postedAt: "2020-01-01 10:10:10",
+//     reviewDescription:
+//       "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès",
+//   },
+// ];
+const Review = ({ rating, setRating, reviews }) => {
   return (
     <View
       style={{
@@ -51,7 +51,7 @@ const Review = ({ rating, setRating }) => {
         alignItems: "flex-start",
       }}
     >
-      <View style={{ paddingHorizontal: 10 }}>
+      <View style={{ paddingHorizontal: 15 }}>
         <Text
           style={{
             fontFamily: "title",
@@ -75,7 +75,7 @@ const Review = ({ rating, setRating }) => {
       <View
         style={{
           gap: 5,
-          paddingHorizontal: 10,
+          paddingHorizontal: 15,
           flexDirection: "row",
           alignItems: "baseline",
           justifyContent: "flex-start",
@@ -101,10 +101,13 @@ const Review = ({ rating, setRating }) => {
           ({reviews.length})
         </Text>
       </View>
-
-      {reviews.map((review, idx) => {
-        return <ReviewCard key={`review_crad_${idx}`} review={review} />;
-      })}
+      <View style={{ gap: 10 }}>
+        {reviews.map((review, idx) => {
+          return (
+            <ReviewCard key={`review_crad_${idx}`} review={review} idx={idx} />
+          );
+        })}
+      </View>
     </View>
   );
 };

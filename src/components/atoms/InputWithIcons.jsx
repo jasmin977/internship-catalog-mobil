@@ -17,11 +17,11 @@ const InputWithIcons = ({ iconNameLeft, action }) => {
     <View
       style={{
         width: screenWidth,
-
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 20,
+        gap: 20,
       }}
     >
       <TouchableOpacity style={styles.container} onPress={action}>
@@ -50,13 +50,13 @@ const InputWithIcons = ({ iconNameLeft, action }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
+    flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: theme.colors.input,
     borderRadius: 8,
-    padding: 10,
+    padding: 12,
   },
   input: {
     fontSize: 14,
