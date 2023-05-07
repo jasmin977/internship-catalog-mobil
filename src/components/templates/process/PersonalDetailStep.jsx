@@ -91,7 +91,7 @@ const PersonalDetailStep = ({ savedEdit, title, required }) => {
   const [loading, setLoading] = useState(false);
 
   let step_1_state = {};
-  if (processForm["step1"] === "") {
+  if (!processForm) {
     step_1_state = {
       firstname: "",
       lastname: "",

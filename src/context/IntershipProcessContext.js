@@ -5,13 +5,13 @@ export const ProcessFormContext = createContext({
   isLoading: {},
   processForm: {},
   currentStep: {},
-  updateprocessForm: () => {},
-  goToNextStep: () => {},
-  goToPreviousStep: () => {},
+  updateprocessForm: () => { },
+  goToNextStep: () => { },
+  goToPreviousStep: () => { },
 });
 
 export default ProcessProvider = ({ children }) => {
-  const [processForm, setprocessForm] = useState({});
+  const [processForm, setprocessForm] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setisloading] = useState(false);
 

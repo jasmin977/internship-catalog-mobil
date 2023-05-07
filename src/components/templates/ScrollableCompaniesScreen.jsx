@@ -47,9 +47,12 @@ const Header = () => {
 };
 
 const ScrollableCompaniesScreen = () => {
-  const { isLoading, data, error, refresh } = useRequest(
-    companiesApi.getCompanyPage(1)
-  );
+  const {
+    isLoading,
+    data,
+    error,
+    send: fetchMoreCompanies,
+  } = useRequest(companiesApi.getCompanyPage(1), true, { field: "companies" });
   const [isRefreshing, setIsRefreshing] = useState(false);
   {
     /*-----------------------------------ANIMATION--------------------------------------- */
@@ -116,7 +119,7 @@ const ScrollableCompaniesScreen = () => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return (
       <Background>
         <ActivityIndicator size="large" color={theme.colors.primary} />
@@ -124,7 +127,7 @@ const ScrollableCompaniesScreen = () => {
     );
   }
   return (
-    data && (
+    <>
       <View
         style={{
           flex: 1,
@@ -137,29 +140,36 @@ const ScrollableCompaniesScreen = () => {
         <Animated.View style={[styles.header, { transform: [{ translateY }] }]}>
           <Header />
         </Animated.View>
-
-        <Animated.FlatList
-          scrollEventThrottle={16}
-          contentContainerStyle={{
-            paddingTop: 170,
-            paddingBottom: 100,
-            gap: 10,
-          }}
-          onScroll={handleScroll}
-          onMomentumScrollEnd={handleSnap}
-          ref={refList}
-          ListHeaderComponent={<MatchedComapniesList />}
-          onRefresh={refresh}
-          refreshing={isRefreshing}
-          data={data.companies}
-          keyExtractor={(item, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          renderItem={(item, idx) => {
-            return <CompanyCardOverview taille={320} company={item.item} />;
-          }}
-        />
+        {/* <MatchedComapniesList /> */}
+        {data && (
+          <Animated.FlatList
+            scrollEventThrottle={16}
+            contentContainerStyle={{
+              paddingTop: 170,
+              paddingBottom: 100,
+              gap: 10,
+            }}
+            onScroll={handleScroll}
+            onMomentumScrollEnd={handleSnap}
+            ref={refList}
+            // ListHeaderComponent={}
+            // onRefresh={fetchMoreCompanies(companiesApi.getCompanyPage(3))}
+            refreshing={isRefreshing}
+            data={data.companies}
+            onEndReached={() =>
+              data.isNextPage &&
+              fetchMoreCompanies(companiesApi.getCompanyPage(data.page + 1))
+            }
+            onEndReachedThreshold={0.5}
+            keyExtractor={(item, index) => index.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={(item, idx) => {
+              return <CompanyCardOverview taille={320} company={item.item} />;
+            }}
+          />
+        )}
       </View>
-    )
+    </>
   );
 };
 const styles = StyleSheet.create({

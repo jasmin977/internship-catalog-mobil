@@ -24,9 +24,28 @@ const SpecialityPicker = ({ label, values, selectedIdx, action }) => {
         selectedValue={selectedIdx}
         onValueChange={action}
       >
+        <Picker.Item
+          style={{
+            fontSize: 16,
+            fontFamily: "text",
+            color: theme.colors.subtext,
+          }}
+          key="noMajorSelected"
+          value="no_major"
+          label="no major selected"
+        />
         {values.map((item) => {
           return (
-            <Picker.Item key={item.id} value={item.id} label={item.name} />
+            <Picker.Item
+              style={{
+                fontSize: 16,
+                fontFamily: "text",
+                color: theme.colors.text,
+              }}
+              key={item.id}
+              value={item.id}
+              label={item.name}
+            />
           );
         })}
       </Picker>

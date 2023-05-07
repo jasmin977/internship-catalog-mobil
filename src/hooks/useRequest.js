@@ -3,7 +3,7 @@ import { apiRequestHandler } from "../api";
 import { useContext } from "react";
 import { AuthContext } from "../context";
 
-const useRequest = (initOption, sendOnLoad = true) => {
+const useRequest = (initOption, sendOnLoad = true, concatList = {},) => {
   const { removeUserCredential, userToken } = useContext(AuthContext);
   const [data, setData] = useState(null);
   const [headers, setheaders] = useState(null);
@@ -12,24 +12,29 @@ const useRequest = (initOption, sendOnLoad = true) => {
   const [option, setOption] = useState(initOption)
 
 
-  const fetchData = async (data) => {
+  const fetchData = async (body) => {
     setIsLoading(true);
-
-    console.log("useRequest: ", option.url);
-    if (userToken)
+    console.log("useRequest: ", !body ? option.url : body.url);
+    if (userToken) {
       option.headers = {
         ...option.headers,
         Authorization: `barear ${userToken}`,
       };
-    const [res, error] = await apiRequestHandler({ ...option, data });
+      if (body) body.headers = {
+        ...body.headers,
+        Authorization: `barear ${userToken}`,
+      };
+    }
+    const [res, error] = await apiRequestHandler({ ...option, ...body });
     if (error) {
       setError(error.message);
       console.log(error.message);
     } else {
-      const { data, status, headers } = res;
+      const { data: resData, status, headers } = res;
       if ([401, 403].includes(status)) removeUserCredential();
-      if (!data.success) setError(data.message);
-      else setData(data);
+      if (!resData.success) setError(resData.message);
+      else if (!concatList.field || !data) setData(resData);
+      else setData(old => ({ ...resData, [concatList.field]: [...old[concatList.field], ...resData[concatList.field]] }))
       setheaders(headers);
     }
     setIsLoading(false);

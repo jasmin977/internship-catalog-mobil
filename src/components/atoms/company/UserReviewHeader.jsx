@@ -45,15 +45,17 @@ const UserReviewHeader = ({ review, idx }) => {
               />
             );
           })}
-          <Text
-            style={{
-              fontFamily: "importantText",
-              fontSize: 13,
-              color: theme.colors.text,
-            }}
-          >
-            {review.rating}.0
-          </Text>
+          {
+            <Text
+              style={{
+                fontFamily: "importantText",
+                fontSize: 13,
+                color: theme.colors.text,
+              }}
+            >
+              {review.rating}.0
+            </Text>
+          }
         </View>
       </View>
     </View>

@@ -23,8 +23,12 @@ const WriteReview = ({
   const reviewInfo = {
     postedByPhot:
       "https://cdn3d.iconscout.com/3d/premium/thumb/user-profile-2871145-2384395.png",
-    postedByName: userInfo.first_name,
-    rate: rating,
+    user: {
+      firstName: userInfo.first_name,
+      id: userInfo.id,
+      lastName: userInfo.last_name,
+    },
+    rating,
   };
 
   return (
@@ -33,7 +37,7 @@ const WriteReview = ({
       <Text style={hintStyle}>Tell others what you think</Text>
       <RateOption rating={rating} setRating={setRating} />
       <View style={{ gap: 5, alignItems: "flex-start" }}>
-        <UserReviewHeader review={reviewInfo} />
+        <UserReviewHeader review={reviewInfo} idx={10} />
         <WriteReviewInput value={review} setValue={setReview} />
       </View>
       <AppButton

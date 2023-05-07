@@ -11,7 +11,7 @@ const ReviewCard = ({ review, idx }) => {
         paddingHorizontal: 10,
         gap: 2,
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems: "center",
       }}
     >
       <View

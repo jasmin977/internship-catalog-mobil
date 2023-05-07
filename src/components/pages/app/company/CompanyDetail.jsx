@@ -134,7 +134,6 @@ const CompanyDetail = ({ route }) => {
   const handleViewChange = (view) => {
     setCurrentView(view);
   };
-  console.log("isloading", isLoading);
   return (
     <Transitioning.View
       ref={transitionRef}
@@ -178,11 +177,14 @@ const CompanyDetail = ({ route }) => {
                 flexGrow: 1,
               }}
             >
-              {currentView === "Review" ? (
-                <CompanyReviewCard />
-              ) : (
-                data && <CompanyDescriptionCard company={data.company} />
-              )}
+              {currentView === "Review"
+                ? companyReviews && (
+                    <CompanyReviewCard
+                      nbReview={companyReviews.nbReview}
+                      avgRating={companyReviews.avgRating}
+                    />
+                  )
+                : data && <CompanyDescriptionCard company={data.company} />}
             </View>
             {/* end screen card */}
 
@@ -229,7 +231,7 @@ const CompanyDetail = ({ route }) => {
 
               <View style={styles.viewContainer}>
                 {currentView === "Description" && data && (
-                  <Overview company={data.company}></Overview>
+                  <Overview company={data.company} />
                 )}
 
                 {currentView === "Review" && companyReviews && (
@@ -373,7 +375,7 @@ const styles = StyleSheet.create({
 
 export default CompanyDetail;
 
-const CompanyReviewCard = () => {
+const CompanyReviewCard = ({ avgRating, nbReview }) => {
   return (
     <View style={{ alignItems: "center", gap: 10 }}>
       <Text
@@ -392,10 +394,10 @@ const CompanyReviewCard = () => {
           color: theme.colors.text,
         }}
       >
-        4.0
+        {parseInt(avgRating).toFixed(1)}
       </Text>
       <View style={{ display: "flex", flexDirection: "row", gap: 3 }}>
-        {[0, 1, 2, 3, 4].map((index) => {
+        {Array.from({ length: parseInt(avgRating) }).map((index) => {
           return (
             <Ionicons
               key={index}
@@ -406,16 +408,18 @@ const CompanyReviewCard = () => {
           );
         })}
       </View>
-      <Text
-        style={{
-          fontSize: 15,
-          fontFamily: "hint",
-          color: theme.colors.text,
-          padding: 10,
-        }}
-      >
-        based on 23 review
-      </Text>
+      {nbReview && (
+        <Text
+          style={{
+            fontSize: 15,
+            fontFamily: "hint",
+            color: theme.colors.text,
+            padding: 10,
+          }}
+        >
+          based on {nbReview} review
+        </Text>
+      )}
     </View>
   );
 };
